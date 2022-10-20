@@ -1,20 +1,19 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
     <head>
-        <meta charset="UTF-8">
-        <title> Index </title>
-        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">                    
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="UNCC Notes App">
+        <title>Task Tracker</title>
+        <!-- styles -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
     </head>
-    <body></br></br></br></br></br>
-        <div align="center">
-          <div align="center" class="border">
-             <div class="header">
-                <h1 class="word">Index</h1>
-             </div></br></br></br>
-                <h1 class="bottom">
-                     Hi {{session.username}}!!</br></br> Welcome to the index page...                
-                </h1></br></br></br>
-                <a href="{{ url_for('logout') }}" class="btn">Logout</a>
-          </div>
-        </div>
+    <body>
+
+        <h1>Welcome to Task Tracker!</h1>
+
+        <h2>Use this site to maintain and organize your Projects and Task.</h2>
+
+
     </body>
 </html>

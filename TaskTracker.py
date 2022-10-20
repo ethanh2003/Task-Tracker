@@ -1,6 +1,5 @@
-<<<<<<< HEAD
 from flask import Flask, render_template, request, redirect, url_for, session
-from flask_mysqldb import MySQL
+from flask_sqlalchemy import SQLAlchemy
 import MySQLdb.cursors
 import re
 import os
@@ -15,8 +14,8 @@ app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = 'root'
 app.config['MYSQL_DB'] = 'login'
  
-mysql = MySQL(app)
- 
+mysql = SQLAlchemy(app)
+app.config ['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///login.sqlite3'
 @app.route('/')
 @app.route('/login', methods =['GET', 'POST'])
 def login():
@@ -63,7 +62,7 @@ def register():
         elif not username or not password or not email:
             msg = 'Please fill out the form !'
         else:
-            cursor.execute('INSERT INTO accounts VALUES (NULL, % s, % s, % s)', (username, password, email, ))
+            cursor.execute('INSERT INTO accounts VALUES (NULL, % s, % s, % s,% s)', (username, password, email, "base"))
             mysql.connection.commit()
             msg = 'You have successfully registered !'
     elif request.method == 'POST':
@@ -71,22 +70,3 @@ def register():
     return render_template('register.html', msg = msg)
 
 app.run(host=os.getenv('IP', '127.0.0.1'),port=int(os.getenv('PORT', 5000)),debug=True)
-=======
-
-import os                 # os is used to get environment variables IP & PORT
-from flask import Flask   # Flask is the web app that we will customize
-from flask import render_template
-
-app = Flask(__name__)     # create an app
-
-
-@app.route('/')
-def index():
-    return render_template('index.html')
-
-
-app.run(host=os.getenv('IP', '127.0.0.1'),port=int(os.getenv('PORT', 5000)),debug=True)
-
-# To see the web page in your web browser, go to the url,
-#   http://127.0.0.1:5000
->>>>>>> parent of 63046d3 (Merge branch 'User-Managment')
