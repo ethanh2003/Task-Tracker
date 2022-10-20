@@ -2,17 +2,17 @@ from flask import Flask, render_template, request, redirect, url_for, session
 from flask_mysqldb import MySQL
 import MySQLdb.cursors
 import re
-import os
  
-app = Flask(__name__,template_folder='template')
+ 
+app = Flask(__name__)
  
  
 app.secret_key = 'your secret key'
  
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'root'
-app.config['MYSQL_DB'] = 'login'
+app.config['MYSQL_PASSWORD'] = 'your password'
+app.config['MYSQL_DB'] = 'geeklogin'
  
 mysql = MySQL(app)
  
@@ -68,5 +68,3 @@ def register():
     elif request.method == 'POST':
         msg = 'Please fill out the form !'
     return render_template('register.html', msg = msg)
-
-app.run(host=os.getenv('IP', '127.0.0.1'),port=int(os.getenv('PORT', 5000)),debug=True)
