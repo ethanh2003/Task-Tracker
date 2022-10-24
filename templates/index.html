@@ -31,10 +31,12 @@
     {% for todo in todo_list %}
 
     <p> Title:{{ todo.title }} <br>Description:{{ todo.description }}  <br>Due Date:{{ todo.due }}  <br>Assigned To:{{ todo.assigned }}</p>
-    {% if todo.complete == False %}
-    <span>Not Complete</span>
+    {% if todo.complete == 0 %}
+    <span>Not Started</span>
+    {% elif todo.complete == 1 %}
+    <span>In Progress</span>
     {% else %}
-    <span>Completed</span>
+    <span>Complete</span>
     {% endif %}
     <a href="/update/{{ todo.id }}">Update</a>
     <a href="/delete/{{ todo.id }}">Delete</a>

@@ -19,7 +19,7 @@ class Todo(db.Model):
     description = db.Column(db.String(4150))
     assigned = db.Column(db.String(100))
     due = db.Column(db.Date)
-    complete = db.Column(db.Boolean)
+    complete = db.Column(db.Integer)
 
 @app.route('/')
 def index():
@@ -32,7 +32,7 @@ def add():
     due=request.form.get("due")
     assigned = request.form.get("assigned")
     due = datetime.strptime(due,"%Y-%m-%d")
-    new_todo = Todo(title=title,description=description,due=due,assigned=assigned, complete=False)
+    new_todo = Todo(title=title,description=description,due=due,assigned=assigned, complete=0)
     db.session.add(new_todo)
     db.session.commit()
     return redirect(url_for("index"))
@@ -40,7 +40,10 @@ def add():
 @app.route("/update/<int:todo_id>")
 def update(todo_id):
     todo = Todo.query.filter_by(id=todo_id).first()
-    todo.complete = not todo.complete
+    if(todo.complete == 2):
+        todo.complete = 0
+    else:
+        todo.complete = int(todo.complete)+1
     db.session.commit()
     return redirect(url_for("index"))
 
