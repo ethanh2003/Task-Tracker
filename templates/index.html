@@ -30,7 +30,7 @@
     </form>
     {% for todo in todo_list %}
 
-    <p> Title:{{ todo.title }} <br>Description:{{ todo.description }}  <br>Due Date:{{ todo.due }}  <br>Assigned To:{{ todo.assigned }}</p>
+    <p> Title: {{ todo.title }} <br>Description: {{ todo.description }}  <br>Due Date: {{ todo.due }}  <br>Assigned To: {{ todo.assigned }}</p>
     {% if todo.complete == 0 %}
     <span>Not Started</span>
     {% elif todo.complete == 1 %}
