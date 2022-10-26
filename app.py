@@ -5,7 +5,7 @@ from flask import render_template
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, render_template, request, redirect, url_for
-
+user = None;
 
 app = Flask(__name__)     # create an app
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.sqlite'
@@ -32,13 +32,14 @@ def index():
 @app.route('/task')
 def task():
     todo_list = Todo.query.all()
-    return render_template('task.html',todo_list=todo_list)
+    user_list = User.query.all()
+    return render_template('task.html',todo_list=todo_list,user_list=user_list)
 @app.route("/add", methods=["POST"])
 def add():
     title = request.form.get("title")
     description = request.form.get("description")
     due=request.form.get("due")
-    assigned = request.form.get("assigned")
+    assigned = ', '.join(request.form.getlist("assigned"))
     due = datetime.strptime(due,"%Y-%m-%d")
     new_todo = Todo(title=title,description=description,due=due,assigned=assigned, complete=0)
     db.session.add(new_todo)
@@ -63,15 +64,29 @@ def delete(todo_id):
     return redirect(url_for("task"))
 @app.route("/register",methods=('GET', 'POST'))
 def register():
-    name =  request.form.get("name")
-    email =  request.form.get("email")
-    username =  request.form.get("username")
-    password =  request.form.get("password")
-    new_user = User(name=name,email=email,username=username,password=password)
-    db.session.add(new_user)
-    db.session.commit()
-    return render_template('register.html')
-
+    if request.method == 'POST':
+        name =  request.form.get("name")
+        email =  request.form.get("email")
+        username =  request.form.get("username")
+        password =  request.form.get("password")
+        new_user = User(name=name,email=email,username=username,password=password)
+        db.session.add(new_user)
+        db.session.commit()
+        return render_template('register.html')
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    error = None
+    if request.method == 'POST':
+        user = User.query.filter_by(username=request.form['username']).first()
+        if(user==None):
+            error = 'Invalid Username. Please try again.'
+            user=None;
+        elif user.password!=request.form['password']:
+            error = 'Invalid Password. Please try again.'
+            user=None;
+        else:
+            return redirect(url_for('task'))
+    return render_template('login.html', error=error)
 
 
 

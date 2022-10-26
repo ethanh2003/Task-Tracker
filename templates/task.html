@@ -24,7 +24,11 @@
             <input type="date" name="due" >
             <br>
             <label>Assigned:</label> <!--Change to Dropdown of users-->
-            <input type="text" name="assigned" placeholder="Enter User">
+            <select name="assigned" id="assigned" multiple>
+                {% for user in user_list %}
+                <option value="{{user.name}}">{{user.name}}</option>
+                {% endfor %}
+            </select>
             <br>
             <button type="submit">Add</button>
         </div>
