@@ -5,7 +5,7 @@ from flask import render_template
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, render_template, request, redirect, url_for
-user = None;
+
 
 app = Flask(__name__)     # create an app
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.sqlite'
@@ -18,6 +18,7 @@ class User(db.Model):
     email = db.Column(db.String(4150),unique=True)
     username = db.Column(db.String(100),unique=True)
     password = db.Column(db.String(100))
+    access = db.Column(db.Boolean)#True if admin, False otherwise
 class Todo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100))
@@ -69,26 +70,50 @@ def register():
         email =  request.form.get("email")
         username =  request.form.get("username")
         password =  request.form.get("password")
-        new_user = User(name=name,email=email,username=username,password=password)
+        new_user = User(name=name,email=email,username=username,password=password,access=False)
         db.session.add(new_user)
         db.session.commit()
-        return render_template('register.html')
+    return render_template('register.html')
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     error = None
     if request.method == 'POST':
-        user = User.query.filter_by(username=request.form['username']).first()
-        if(user==None):
+        Current_user = User.query.filter_by(username=request.form['username']).first()
+        if(Current_user==None):
             error = 'Invalid Username. Please try again.'
-            user=None;
-        elif user.password!=request.form['password']:
+            Current_user=None;
+        elif Current_user.password!=request.form['password']:
             error = 'Invalid Password. Please try again.'
-            user=None;
+            Current_user=None;
         else:
             return redirect(url_for('task'))
     return render_template('login.html', error=error)
-
-
+@app.route("/updateUser/<int:user_id>", methods=['GET', 'POST'])
+def updateUser(user_id):
+    if request.method == 'POST':
+        User = User.query.filter_by(id=user_id).first()
+        if(request.form["updatePass"]!=User.password):
+            User.password=request.form["updatePass"]
+        if(request.form["editEmail"]!=User.email):
+            User.email=request.form["editEmail"]
+        if(request.form["editAccess"]=="Basic"):
+            access=False
+        elif(request.form["editAccess"]=="Admin"):
+            access = True
+        if(access!=User.access):
+            User.access=access
+        db.session.commit()
+    return redirect(url_for("viewUsers"))
+@app.route('/ViewUsers')
+def viewUsers():
+    user_list = User.query.all()
+    return render_template('ViewUsers.html',user_list=user_list)
+@app.route("/deleteUser/<int:user_id>")
+def deleteUser(user_id):
+    user = User.query.filter_by(id=user_id).first()
+    db.session.delete(user)
+    db.session.commit()
+    return redirect(url_for("viewUsers"))
 
 
 
