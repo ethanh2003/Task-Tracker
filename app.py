@@ -1,6 +1,6 @@
 
 import os                 # os is used to get environment variables IP & PORT
-from flask import Flask   # Flask is the web app that we will customize
+from flask import Flask, session   # Flask is the web app that we will customize
 from flask import render_template
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
@@ -12,6 +12,7 @@ app = Flask(__name__)     # create an app
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.sqlite'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
+app.secret_key = "abc"  
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -87,6 +88,7 @@ def login():
             error = 'Invalid Password. Please try again.'
             Current_user=None;
         else:
+            session["user"] = Current_user.id
             return redirect(url_for('task'))
     return render_template('login.html', error=error)
 @app.route("/updateUser/<int:user_id>", methods=['GET', 'POST'])
