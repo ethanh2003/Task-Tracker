@@ -23,8 +23,9 @@
             <label>Due:</label>
             <input type="date" name="due" >
             <br>
-            <label>Assigned:</label> <!--Change to Dropdown of users-->
+            <label>Assigned:</label>
             <select name="assigned" id="assigned" multiple>
+                <option value="All"> All Users</option>
                 {% for user in user_list %}
                 <option value="{{user.name}}">{{user.name}}</option>
                 {% endfor %}
