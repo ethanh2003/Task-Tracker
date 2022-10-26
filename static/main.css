@@ -1,32 +1,74 @@
 body {
     padding: 30px 30px;
-    }
-h1{
-    color:green;
 }
-h2{
-    color:gold;
-    background:green;
+
+h1 {
+    color: green;
 }
-label:not(.ex){ /*Creates deign for submission fourms*/
+
+h2 {
+    color: gold;
+    background: green;
+}
+
+label:not(.ex) {
+    /*Creates deign for submission fourms*/
     display: block;
     float: left;
-    width : 120px;    
-  }
-.todo{
+    width: 120px;
+}
+h3 {
+    font-weight: bold;
+    text-align: left;
+}
+
+h4 {
+    text-align: left;
+    margin: 1px;
+}
+
+th {
+    width: 550px;
+}
+
+td {
+    height: 75px;
+}
+
+td>a>button {
+    width: 200px;
+    height: 50px;
+    background-color: goldenrod;
+}
+/*Classes*/
+.todo {
     text-align: center;
     background-color: whitesmoke;
 
 }
-.inProgress{
+
+.inProgress {
     background-color: aqua;
-    border: 5px;
+    border-color: rgb(1, 208, 208);
+    height: 30px;
+    border-radius: 15px;
 }
-.complete{
+
+.complete {
     background-color: lightgreen;
-    border: 5px;
+    border-color: rgb(119, 196, 119);
+    height: 30px;
+    border-radius: 15px;
 }
-.notStarted{
+
+.notStarted {
     background-color: red;
-    border: 5px;
+    border-color: rgb(221, 4, 4);
+    height: 30px;
+    border-radius: 15px;
+}
+
+.title {
+    font-weight: bold;
+    font-size: larger;
 }
