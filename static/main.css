@@ -8,3 +8,25 @@ h2{
     color:gold;
     background:green;
 }
+label:not(.ex){ /*Creates deign for submission fourms*/
+    display: block;
+    float: left;
+    width : 120px;    
+  }
+.todo{
+    text-align: center;
+    background-color: whitesmoke;
+
+}
+.inProgress{
+    background-color: aqua;
+    border: 5px;
+}
+.complete{
+    background-color: lightgreen;
+    border: 5px;
+}
+.notStarted{
+    background-color: red;
+    border: 5px;
+}
