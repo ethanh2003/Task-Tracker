@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Tracker</title>
+    <link rel="stylesheet" href="./static/main.css">
+</head>
+<a href="/"><button>Home</button></a>
+<body>
+
+    <h1>Task Tracker</h1>
+    <form action="/add" method="post">
+        <div>
+            <h3>Add Task</h3>
+            <label>Task Title:</label>
+            <input type="text" name="title" placeholder="Task">
+            <br>
+            <label>Description:</label>
+            <input type="text" name="description" >
+            <br>
+            <label>Due:</label>
+            <input type="date" name="due" >
+            <br>
+            <label>Assigned:</label> <!--Change to Dropdown of users-->
+            <input type="text" name="assigned" placeholder="Enter User">
+            <br>
+            <button type="submit">Add</button>
+        </div>
+    </form>
+    <div class="todo">
+     <table>
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Due Date</th>
+            <th>Assigned To</th>
+            <th>Status</th>
+            <th></th>
+        </thead>
+        </tr>
+        <tbody>
+    {% for todo in todo_list %}
+    <tr>
+    <td class="title">{{ todo.title }}</td> <td>{{ todo.description }}</td>  <td>{{ todo.due }}</td>  <td>{{ todo.assigned }}</td>
+    <td>{% if todo.complete == 0 %}
+    <button class="notStarted">Not Started</button>
+    {% elif todo.complete == 1 %}
+    <button class="inProgress">In Progress</button>
+    {% else %}
+    <button class="complete">Complete</button>
+    {% endif %}</td>
+    <td><a href="/update/{{ todo.id }}"><button>Update</button></a></td>
+    <td><a href="/delete/{{ todo.id }}"><button>Delete</button></a></td></tr>
+    
+    {% endfor %}
+    </tbody>
+    </table>
+    </div>
+
+</body>
+
+</html>

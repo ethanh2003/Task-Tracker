@@ -15,8 +15,8 @@ db = SQLAlchemy(app)
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(4150))
-    email = db.Column(db.String(4150))
-    username = db.Column(db.String(100))
+    email = db.Column(db.String(4150),unique=True)
+    username = db.Column(db.String(100),unique=True)
     password = db.Column(db.String(100))
 class Todo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -25,11 +25,14 @@ class Todo(db.Model):
     assigned = db.Column(db.String(100))
     due = db.Column(db.Date)
     complete = db.Column(db.Integer)
-
-@app.route('/')
+@app.route("/")
 def index():
+    
+    return render_template('index.html')
+@app.route('/task')
+def task():
     todo_list = Todo.query.all()
-    return render_template('index.html',todo_list=todo_list)
+    return render_template('task.html',todo_list=todo_list)
 @app.route("/add", methods=["POST"])
 def add():
     title = request.form.get("title")
@@ -40,7 +43,7 @@ def add():
     new_todo = Todo(title=title,description=description,due=due,assigned=assigned, complete=0)
     db.session.add(new_todo)
     db.session.commit()
-    return redirect(url_for("index"))
+    return redirect(url_for("task"))
 
 @app.route("/update/<int:todo_id>")
 def update(todo_id):
@@ -50,14 +53,24 @@ def update(todo_id):
     else:
         todo.complete = int(todo.complete)+1
     db.session.commit()
-    return redirect(url_for("index"))
+    return redirect(url_for("task"))
 
 @app.route("/delete/<int:todo_id>")
 def delete(todo_id):
     todo = Todo.query.filter_by(id=todo_id).first()
     db.session.delete(todo)
     db.session.commit()
-    return redirect(url_for("index"))
+    return redirect(url_for("task"))
+@app.route("/register",methods=('GET', 'POST'))
+def register():
+    name =  request.form.get("name")
+    email =  request.form.get("email")
+    username =  request.form.get("username")
+    password =  request.form.get("password")
+    new_user = User(name=name,email=email,username=username,password=password)
+    db.session.add(new_user)
+    db.session.commit()
+    return render_template('register.html')
 
 
 
