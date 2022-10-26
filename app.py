@@ -5,7 +5,7 @@ from flask import render_template
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, render_template, request, redirect, url_for
-
+from flask_session import Session
 
 
 app = Flask(__name__)     # create an app
