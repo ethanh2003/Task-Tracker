@@ -11,8 +11,8 @@
 <body>
 
     <h1>Task Tracker</h1>
-    <form action="/register" method="post">
-        <div>
+    <form action="register" method="post">
+        <div> <!--TODO Fix redirect-->
             <h3>Register New User</h3>
             <label>Name:</label>
             <input type="text" name="name" value="{{ request.form['name'] }}">
@@ -51,11 +51,12 @@
     <td><input type="text" id="editName" value="{{ user.name }}"></td>  
     <td><select id="editAccess">{% if user.access == 0 %}<option selected value="Basic">Basic</option><option value="Admin">Admin</option> {% elif user.access == 1 %}<option value="Basic">Basic</option><option selected value="Admin">Admin</option>{%endif%}"></select></td>
     <td><input type="password" id="updatePass">
-    <td><a href="/updateUser/{{user.id}}"><button type="submit">Update</button></a></td>
+        <!--TODO fix update feature-->
+    <td><a href="/updateUser/{{user.id}}"><button type="submit">Update</button></a></td> </form> 
     <td><a href="/deleteUser/{{user.id}}"><button>Delete</button></a></td></tr>
     
     {% endfor %}
-    </form>    
+      
 </tbody>
     </table>
     </div>
