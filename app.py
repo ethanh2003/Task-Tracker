@@ -37,6 +37,8 @@ def index():
 @app.route('/task')
 def task():
     global user
+    if(user==User):
+        return render_template('login.html',message="Please Log In To access this page")
     todo_list = Todo.query.all()
     user_list = User.query.all()
     return render_template('task.html',todo_list=todo_list,user_list=user_list,user=user)
@@ -129,6 +131,8 @@ def updateUser(user_id):
 @app.route('/ViewUsers', methods=['GET', 'POST'])
 def viewUsers():
     global user
+    if(user==User):
+        return render_template('login.html',message="Please Log In To access this page")
     if request.method == 'POST':
         name =  request.form.get("name")
         email =  request.form.get("email")
