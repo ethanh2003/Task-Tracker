@@ -82,6 +82,7 @@ def register():
         new_user = User(name=name,email=email,username=username,password=password,access=False)
         db.session.add(new_user)
         db.session.commit()
+        return redirect(url_for('login'))
     return render_template('register.html',user=user)
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -104,9 +105,7 @@ def login():
 @app.route("/updateUser/<int:user_id>", methods=['GET', 'POST'])
 def updateUser(user_id):
     global user
-    url=str(request.form.get("redirect"))
     if request.method == 'POST':
-        url=request.form.get("redirect")
         editUser = User.query.filter_by(id=user_id).first()
         if(request.form.get("updatePass", False)!=editUser.password):
             editUser.password=request.form["updatePass"]
@@ -116,16 +115,17 @@ def updateUser(user_id):
             editUser.username=request.form["editUsername"]
         if(request.form.get("editName", False)!=editUser.name):
             editUser.name=request.form["editName"]
-        if(url != "profile"):
+        if user.access==1:
             if(request.form.get("editAccess", False)=="Basic"):
                 access=False
             elif(request.form.get("editAccess", False)=="Admin"):
                 access = True
             if(access!=editUser.access):
                 editUser.access=access
+                
         
         db.session.commit()
-    return redirect(url_for("viewUsers"))
+    return redirect(url_for("task"))
 @app.route('/ViewUsers', methods=['GET', 'POST'])
 def viewUsers():
     global user
@@ -135,7 +135,11 @@ def viewUsers():
         username =  request.form.get("username")
         password =  request.form.get("password")
         access = request.form.get("access")
-        new_user = User(name=name,email=email,username=username,password=password,access=bool(access))
+        if(int(access) == 0):
+            access=False
+        elif(int(access) == 1):
+            access = True
+        new_user = User(name=name,email=email,username=username,password=password,access=(access))
         db.session.add(new_user)
         db.session.commit()
     user_list = User.query.all()
@@ -143,8 +147,8 @@ def viewUsers():
 @app.route("/deleteUser/<int:user_id>")
 def deleteUser(user_id):
     global user
-    user = User.query.filter_by(id=user_id).first()
-    db.session.delete(user)
+    deleteUser = User.query.filter_by(id=user_id).first()
+    db.session.delete(deleteUser)
     db.session.commit()
     return redirect(url_for("viewUsers"))
 @app.route("/logout")
@@ -152,26 +156,6 @@ def logout():
     global user
     user=User
     return render_template('index.html')
-@app.route("/profile")
-def profile():
-    global user
-
-    return render_template('profile.html',user=user)
-@app.route("/profileEdit", methods=['GET', 'POST'])
-def profileEdit():
-    global user
-    if request.method == 'POST':
-        editUser = user
-        if(request.form.get("updatePass", False)!=editUser.password):
-            editUser.password=request.form["updatePass"]
-        if(request.form.get("editEmail", False)!=editUser.email):
-            editUser.email=request.form["editEmail"]
-        if(request.form.get("editUsername", False)!=editUser.username):
-            editUser.username=request.form["editUsername"]
-        if(request.form.get("editName", False)!=editUser.name):
-            editUser.name=request.form["editName"]
-        db.session.commit()
-    return redirect(url_for("profile"))
 if __name__ == "__main__":
     with app.app_context():
         db.create_all()
