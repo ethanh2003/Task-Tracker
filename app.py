@@ -28,17 +28,20 @@ class Todo(db.Model):
     assigned = db.Column(db.String(100))
     due = db.Column(db.Date)
     complete = db.Column(db.Integer)
+user = User
 @app.route("/")
 def index():
-    
+    global user
     return render_template('index.html')
 @app.route('/task')
 def task():
+    global user
     todo_list = Todo.query.all()
     user_list = User.query.all()
-    return render_template('task.html',todo_list=todo_list,user_list=user_list)
+    return render_template('task.html',todo_list=todo_list,user_list=user_list,user=user)
 @app.route("/add", methods=["POST"])
 def add():
+    global user
     title = request.form.get("title")
     description = request.form.get("description")
     due=request.form.get("due")
@@ -51,6 +54,7 @@ def add():
 
 @app.route("/update/<int:todo_id>")
 def update(todo_id):
+    global user
     todo = Todo.query.filter_by(id=todo_id).first()
     if(todo.complete == 2):
         todo.complete = 0
@@ -61,12 +65,14 @@ def update(todo_id):
 
 @app.route("/delete/<int:todo_id>")
 def delete(todo_id):
+    global user
     todo = Todo.query.filter_by(id=todo_id).first()
     db.session.delete(todo)
     db.session.commit()
     return redirect(url_for("task"))
 @app.route("/register",methods=('GET', 'POST'))
 def register():
+    global user
     if request.method == 'POST':
         name =  request.form.get("name")
         email =  request.form.get("email")
@@ -75,9 +81,10 @@ def register():
         new_user = User(name=name,email=email,username=username,password=password,access=False)
         db.session.add(new_user)
         db.session.commit()
-    return render_template('register.html')
+    return render_template('register.html',user=user)
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    global user
     error = None
     if request.method == 'POST':
         Current_user = User.query.filter_by(username=request.form['username']).first()
@@ -89,10 +96,13 @@ def login():
             Current_user=None;
         else:
             session["user"] = Current_user.id
+            global user
+            user = Current_user
             return redirect(url_for('task'))
     return render_template('login.html', error=error)
 @app.route("/updateUser/<int:user_id>", methods=['GET', 'POST'])
 def updateUser(user_id):
+    global user
     if request.method == 'POST':
         User = User.query.filter_by(id=user_id).first()
         if(request.form["updatePass"]!=User.password):
@@ -109,16 +119,21 @@ def updateUser(user_id):
     return redirect(url_for("viewUsers"))
 @app.route('/ViewUsers')
 def viewUsers():
+    global user
     user_list = User.query.all()
-    return render_template('ViewUsers.html',user_list=user_list)
+    return render_template('ViewUsers.html',user_list=user_list,user=user)
 @app.route("/deleteUser/<int:user_id>")
 def deleteUser(user_id):
+    global user
     user = User.query.filter_by(id=user_id).first()
     db.session.delete(user)
     db.session.commit()
     return redirect(url_for("viewUsers"))
-
-
+@app.route("/logout")
+def logout():
+    global user
+    user=User
+    return render_template('index.html')
 
 if __name__ == "__main__":
     with app.app_context():

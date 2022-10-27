@@ -25,7 +25,7 @@
             <br>
             <label>Assigned:</label>
             <select name="assigned" id="assigned" multiple>
-                <option value="All"> All Users</option>
+                <option value="All">All User</option>
                 {% for user in user_list %}
                 <option value="{{user.name}}">{{user.name}}</option>
                 {% endfor %}
@@ -49,6 +49,7 @@
         <tbody>
     {% for todo in todo_list %}
     <tr>
+        {%if user.name in todo.assigned or todo.assigned=="All"%}
     <td class="title">{{ todo.title }}</td> <td>{{ todo.description }}</td>  <td>{{ todo.due }}</td>  <td>{{ todo.assigned }}</td>
     <td>{% if todo.complete == 0 %}
     <button class="notStarted">Not Started</button>
@@ -59,7 +60,7 @@
     {% endif %}</td>
     <td><a href="/update/{{ todo.id }}"><button>Update</button></a></td>
     <td><a href="/delete/{{ todo.id }}"><button>Delete</button></a></td></tr>
-    
+    {% endif %}
     {% endfor %}
     </tbody>
     </table>
