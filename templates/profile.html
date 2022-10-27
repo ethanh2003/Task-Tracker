@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Tracker</title>
+    <link rel="stylesheet" href="./static/main.css">
+</head>
+<a href="/"><button>Home</button></a>
+<a href="/logout"><button>Log Out</button></a>
+<a href="/task"><button>Task</button></a>
+{%if user.access==1%}
+<a href="/ViewUsers"><button>User Managment</button></a>
+{%endif%}
+<body>
+    <div class="todo">
+        <table>
+           <thead>
+           <tr>
+               <th>Username</th>
+               <th>Email</th>
+               <th>Name</th>
+               <th>Password</th>
+               <th></th>
+               <th></th>
+           </thead>
+           </tr>
+           <tbody>
+<form action="/profileEdit" method="Post">
+    <td class="title"><input type="text" name="editUsername" value="{{ user.username }}"></td> 
+    <td><input type="text" name="editEmail" value="{{ user.email }}"></td>  
+    <td><input type="text" name="editName" value="{{ user.name }}"></td>  
+    <td><input type="password" name="updatePass" value={{user.password}}>
+    <td><a href="/profileEdit"><button type="submit">Update</button></a>
+        <input type="hidden" name="redirect" value="profile"></td> </form> 
+    
+    </table>
+</div>
+    </body>
+    </html>
