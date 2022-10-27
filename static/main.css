@@ -115,3 +115,19 @@ div.h {
     justify-content: center;
     text-align: center;
 }
+
+.register-container > form {
+    display: flex;
+    flex-direction: column;
+}
+
+.register-container > form > input {
+    padding: 5px;
+    margin-top: 20px;
+}
+
+.register-container > form > input[type="submit"] {
+    background-color: mediumseagreen;
+    border-style: none;
+    padding: 10px;
+}
