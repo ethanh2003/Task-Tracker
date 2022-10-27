@@ -1,4 +1,5 @@
 
+from email import message
 import os                 # os is used to get environment variables IP & PORT
 from flask import Flask, session   # Flask is the web app that we will customize
 from flask import render_template
@@ -81,10 +82,13 @@ def register():
         email =  request.form.get("email")
         username =  request.form.get("username")
         password =  request.form.get("password")
-        new_user = User(name=name,email=email,username=username,password=password,access=False)
-        db.session.add(new_user)
-        db.session.commit()
-        return redirect(url_for('login'))
+        if(User.query.filter_by(email=email).first() or User.query.filter_by(username=username).first()):
+            return render_template('register.html',message="Username or Email already in use")
+        else:
+            new_user = User(name=name,email=email,username=username,password=password,access=False)
+            db.session.add(new_user)
+            db.session.commit()
+            return redirect(url_for('login'))
     return render_template('register.html',user=user)
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -107,7 +111,10 @@ def login():
 @app.route("/updateUser/<int:user_id>", methods=['GET', 'POST'])
 def updateUser(user_id):
     global user
+    user_list = User.query.all()
     if request.method == 'POST':
+        email = request.form.get("editEmail", False)
+        username = request.form.get("editUsername", False)
         editUser = User.query.filter_by(id=user_id).first()
         if(request.form.get("updatePass", False)!=editUser.password):
             editUser.password=request.form["updatePass"]
@@ -123,14 +130,13 @@ def updateUser(user_id):
             elif(request.form.get("editAccess", False)=="Admin"):
                 access = True
             if(access!=editUser.access):
-                editUser.access=access
-                
-        
-        db.session.commit()
+                editUser.access=access   
+            db.session.commit()
     return redirect(url_for("task"))
 @app.route('/ViewUsers', methods=['GET', 'POST'])
 def viewUsers():
     global user
+    user_list = User.query.all()
     if(user==User):
         return render_template('login.html',message="Please Log In To access this page")
     if request.method == 'POST':
@@ -143,10 +149,13 @@ def viewUsers():
             access=False
         elif(int(access) == 1):
             access = True
-        new_user = User(name=name,email=email,username=username,password=password,access=(access))
-        db.session.add(new_user)
-        db.session.commit()
-    user_list = User.query.all()
+        if(User.query.filter_by(email=email).first() or User.query.filter_by(username=username).first()):
+            return render_template('ViewUsers.html',user_list=user_list,user=user,error="Username or Email already in use")
+        else:
+            new_user = User(name=name,email=email,username=username,password=password,access=(access))
+            db.session.add(new_user)
+            db.session.commit()
+            return redirect(url_for("viewUsers"))
     return render_template('ViewUsers.html',user_list=user_list,user=user)
 @app.route("/deleteUser/<int:user_id>")
 def deleteUser(user_id):

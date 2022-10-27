@@ -15,16 +15,16 @@
         <div>
             <h3>Register</h3>
             <label>Name:</label>
-            <input type="text" name="name" value="{{ request.form['name'] }}">
+            <input type="text" required name="name" value="{{ request.form['name'] }}">
             <br>
             <label>Email:</label>
-            <input type="text" name="email" value="{{ request.form['email'] }}">
+            <input type="email" required name="email" value="{{ request.form['email'] }}">
             <br>
             <label>Username:</label>
-            <input type="text" name="username" value="{{ request.form['username'] }}">
+            <input type="text" required name="username" value="{{ request.form['username'] }}">
             <br>
             <label>Password:</label> <!--Change to Dropdown of users-->
-            <input type="text" name="password" value="{{ request.form['password'] }}">
+            <input type="text" required name="password" value="{{ request.form['password'] }}">
             <br>
             <button type="submit">Add</button>
         </div>
