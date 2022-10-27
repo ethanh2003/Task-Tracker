@@ -18,16 +18,16 @@
         <div>
             <h3>Add Task</h3>
             <label>Task Title:</label>
-            <input type="text" name="title" placeholder="Task">
+            <input required type="text" name="title" placeholder="Task">
             <br>
             <label>Description:</label>
             <input type="text" name="description" >
             <br>
             <label>Due:</label>
-            <input type="date" name="due" >
+            <input required type="date" name="due" >
             <br>
             <label>Assigned:</label>
-            <select name="assigned" id="assigned" multiple>
+            <select required name="assigned" id="assigned" multiple>
                 <option value="All">All User</option>
                 {% for user in user_list %}
                 <option value="{{user.name}}">{{user.name}}</option>

@@ -10,24 +10,25 @@
 <a href="/logout"><button>Log Out</button></a>
 <a href="/task"><button>Task</button></a>
 <a href="/ViewUsers"><button>User Managment</button></a>
+<h1 color="red">{{error}}</h1>
 {%if user.access==1%}
 <body>
 
     <h1>Task Tracker</h1>
     <form action="/ViewUsers" method="post">
-        <div> <!--TODO Fix redirect-->
+        <div> 
             <h3>Register New User</h3>
             <label>Name:</label>
-            <input type="text" name="name" value="{{ request.form['name'] }}">
+            <input required type="text" name="name" value="{{ request.form['name'] }}">
             <br>
             <label>Email:</label>
-            <input type="text" name="email" value="{{ request.form['email'] }}">
+            <input required type="text" name="email" value="{{ request.form['email'] }}">
             <br>
             <label>Username:</label>
-            <input type="text" name="username" value="{{ request.form['username'] }}">
+            <input required type="text" name="username" value="{{ request.form['username'] }}">
             <br>
             <label>Password:</label> 
-            <input type="text" name="password" value="{{ request.form['password'] }}">
+            <input required type="text" name="password" value="{{ request.form['password'] }}">
             <br>
             <select name="access"> <option value="0">Basic</option><option value="1">Admin</option> </select>
             <br>
