@@ -8,8 +8,9 @@ from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, render_template, request, redirect, url_for
 from flask_session import Session
 
-
 app = Flask(__name__)     # create an app
+
+#sqp setup
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.sqlite'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
@@ -22,6 +23,7 @@ class User(db.Model):
     username = db.Column(db.String(100),unique=True)
     password = db.Column(db.String(100))
     access = db.Column(db.Boolean)#True if admin, False otherwise
+
 class Todo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100))
@@ -30,11 +32,13 @@ class Todo(db.Model):
     due = db.Column(db.Date)
     complete = db.Column(db.Integer)
     createdBy = db.Column(db.Integer)
+
 user = User
 @app.route("/")
 def index():
     global user
     return render_template('index.html')
+
 @app.route('/task')
 def task():
     global user
@@ -43,6 +47,7 @@ def task():
     todo_list = Todo.query.all()
     user_list = User.query.all()
     return render_template('task.html',todo_list=todo_list,user_list=user_list,user=user)
+
 @app.route("/add", methods=["POST"])
 def add():
     global user
@@ -57,7 +62,7 @@ def add():
     return redirect(url_for("task"))
 
 @app.route("/update/<int:todo_id>")
-def update(todo_id):
+def update(todo_id: int):
     global user
     todo = Todo.query.filter_by(id=todo_id).first()
     if(todo.complete == 2):
@@ -68,12 +73,13 @@ def update(todo_id):
     return redirect(url_for("task"))
 
 @app.route("/delete/<int:todo_id>")
-def delete(todo_id):
+def delete(todo_id: int):
     global user
     todo = Todo.query.filter_by(id=todo_id).first()
     db.session.delete(todo)
     db.session.commit()
     return redirect(url_for("task"))
+
 @app.route("/register",methods=('GET', 'POST'))
 def register():
     global user
@@ -90,6 +96,7 @@ def register():
             db.session.commit()
             return redirect(url_for('login'))
     return render_template('register.html',user=user)
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     global user
@@ -108,8 +115,9 @@ def login():
             user = Current_user
             return redirect(url_for('task'))
     return render_template('login.html', error=error)
+
 @app.route("/updateUser/<int:user_id>", methods=['GET', 'POST'])
-def updateUser(user_id):
+def updateUser(user_id: int):
     global user
     user_list = User.query.all()
     if request.method == 'POST':
@@ -133,6 +141,7 @@ def updateUser(user_id):
                 editUser.access=access   
             db.session.commit()
     return redirect(url_for("task"))
+
 @app.route('/ViewUsers', methods=['GET', 'POST'])
 def viewUsers():
     global user
@@ -157,18 +166,21 @@ def viewUsers():
             db.session.commit()
             return redirect(url_for("viewUsers"))
     return render_template('ViewUsers.html',user_list=user_list,user=user)
+
 @app.route("/deleteUser/<int:user_id>")
-def deleteUser(user_id):
+def deleteUser(user_id: int):
     global user
     deleteUser = User.query.filter_by(id=user_id).first()
     db.session.delete(deleteUser)
     db.session.commit()
     return redirect(url_for("viewUsers"))
+
 @app.route("/logout")
 def logout():
     global user
     user=User
     return render_template('index.html')
+
 if __name__ == "__main__":
     with app.app_context():
         db.create_all()
