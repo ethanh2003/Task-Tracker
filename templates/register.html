@@ -7,26 +7,33 @@
     <title>Task Tracker</title>
     <link rel="stylesheet" href="./static/main.css">
 </head>
-<a href="/"><button>Home</button></a>
+<div class="top-contain">
+    <a href="/">
+        <button class="top-bar">Home</button>
+    </a>
+</div>
 <body>
-
-    <h1>Task Tracker</h1>
+    <div class="h">
+        <h1>Task Tracker</h1>
+    </div>  
     <form action="/register" method="post">
-        <div>
+        <div class="register-container">
             <h3>Register</h3>
-            <label>Name:</label>
-            <input type="text" name="name" value="{{ request.form['name'] }}">
-            <br>
-            <label>Email:</label>
-            <input type="text" name="email" value="{{ request.form['email'] }}">
-            <br>
-            <label>Username:</label>
-            <input type="text" name="username" value="{{ request.form['username'] }}">
-            <br>
-            <label>Password:</label> <!--Change to Dropdown of users-->
-            <input type="text" name="password" value="{{ request.form['password'] }}">
-            <br>
-            <button type="submit">Add</button>
+            <div>
+                <label>Name:</label>
+                <input type="text" name="name" value="{{ request.form['name'] }}">
+                <br>
+                <label>Email:</label>
+                <input type="text" name="email" value="{{ request.form['email'] }}">
+                <br>
+                <label>Username:</label>
+                <input type="text" name="username" value="{{ request.form['username'] }}">
+                <br>
+                <label>Password:</label> <!--Change to Dropdown of users-->
+                <input type="text" name="password" value="{{ request.form['password'] }}">
+                <br>
+            </div>
+            <button class="submit-button" type="submit">Add</button>
         </div>
     </form>
     <h1>{{message}}</h1>
