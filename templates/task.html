@@ -60,7 +60,10 @@
     <button class="complete">Complete</button>
     {% endif %}</td>
     <td><a href="/update/{{ todo.id }}"><button>Update</button></a></td>
-    <td><a href="/delete/{{ todo.id }}"><button>Delete</button></a></td></tr>
+    {%if todo.createdBy == user.id or user.access == 1%}
+    <td><a href="/delete/{{ todo.id }}"><button>Delete</button></a></td>
+    {%endif%}</tr>
+
     {% endif %}
     {% endfor %}
     </tbody>
@@ -89,11 +92,13 @@
        {% elif todo.complete == 1 %}
        <button class="inProgress">In Progress</button>
        {% else %}
-       <button class="complete">Complete</button>
+       <button class="complete">Complete</button>{% endif %}
        </td>
        <td><a href="/update/{{ todo.id }}"><button>Update</button></a></td>
-       <td><a href="/delete/{{ todo.id }}"><button>Delete</button></a></td></tr>
-       {% endif %}
+       {%if todo.createdBy == user.id or user.access == 1%}
+       <td><a href="/delete/{{ todo.id }}"><button>Delete</button></a></td>
+       {%endif%}</tr>
+       
        {% endfor %}
        </tbody>
        </table>

@@ -28,6 +28,7 @@ class Todo(db.Model):
     assigned = db.Column(db.String(100))
     due = db.Column(db.Date)
     complete = db.Column(db.Integer)
+    createdBy = db.Column(db.Integer)
 user = User
 @app.route("/")
 def index():
@@ -47,7 +48,7 @@ def add():
     due=request.form.get("due")
     assigned = ', '.join(request.form.getlist("assigned"))
     due = datetime.strptime(due,"%Y-%m-%d")
-    new_todo = Todo(title=title,description=description,due=due,assigned=assigned, complete=0)
+    new_todo = Todo(title=title,description=description,due=due,assigned=assigned, complete=0,createdBy=user.id)
     db.session.add(new_todo)
     db.session.commit()
     return redirect(url_for("task"))
