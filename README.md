@@ -1,6 +1,6 @@
 # ITSC3155Team28
 
-##Team 28 Members
+## Team 28 Members
 - Ethan Herring
 - Isaac Hall
 - Nicholas Cassarino
