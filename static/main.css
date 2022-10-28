@@ -25,6 +25,8 @@ h4 {
 }
 
 th {
+    font-size: larger;
+    height: 75px;
     width: 550px;
 }
 
@@ -34,8 +36,10 @@ td {
 
 td > a > button {
     width: 200px;
-    height: 50px;
+    height: 30px;
     background-color: goldenrod;
+    border-style: none;
+    color: white;
 }
 
 a {
@@ -43,31 +47,35 @@ a {
 }
 
 /*Classes*/
+
+/* table on the task page */
 .todo {
     text-align: center;
     background-color: whitesmoke;
-
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .inProgress {
     background-color: aqua;
-    border-color: rgb(1, 208, 208);
+    border-style: none;
+    color: white;
     height: 30px;
-    border-radius: 15px;
 }
 
 .complete {
-    background-color: lightgreen;
-    border-color: rgb(119, 196, 119);
+    background-color: mediumseagreen;
+    border-style: none;
+    color: white;
     height: 30px;
-    border-radius: 15px;
 }
 
 .notStarted {
-    background-color: red;
-    border-color: rgb(221, 4, 4);
+    background-color: orangered;
+    border-style: none;
+    color: white;
     height: 30px;
-    border-radius: 15px;
 }
 
 .title {
@@ -79,6 +87,7 @@ a {
 .top-bar {
     background-color: mediumseagreen;
     border-style: none;
+    color: white;
     height: 50px;
     width: 200px;
     margin-right: 10px;
@@ -94,8 +103,8 @@ a {
 /* register page */
 .submit-button {
     background-color: mediumseagreen;
-    border-style: none;
-    border-radius: 20px;
+    border-style: none; 
+    color: white;
     height: 50px;
     width: 200px;
     margin-top: 20px;
@@ -130,4 +139,9 @@ div.h {
     background-color: mediumseagreen;
     border-style: none;
     padding: 10px;
+}
+
+.register-head {
+    font-size: 25px;
+    margin-bottom: 40px;
 }

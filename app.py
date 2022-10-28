@@ -1,4 +1,3 @@
-
 from email import message
 import os                 # os is used to get environment variables IP & PORT
 from flask import Flask, session   # Flask is the web app that we will customize
