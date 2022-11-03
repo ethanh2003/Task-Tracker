@@ -179,7 +179,26 @@ def logout():
     global user
     user=User
     return render_template('index.html')
+@app.route('/editTask/<int:task_id>', methods=['GET', 'POST'])
+def editTask(task_id):
+    global user
+    user_list = User.query.all()
+    if request.method == 'POST':
+        editTask = Todo.query.filter_by(id=task_id).first()
+        if(request.form.get("editTitle", False)!=editTask.title):
+            editTask.title=request.form["editTitle"]
+        if(request.form.get("editDescription ", False)!=editTask.description ):
+            editTask.description =request.form["editDescription "]
+        if(request.form.get("editDue", False)!=editTask.due):
+            due = datetime.strptime(request.form["editDue"],"%Y-%m-%d")
+            editTask.due=due
+        if(request.form.get("assigned", False)!=editTask.assigned):
+            editTask.assigned=', '.join(request.form.getlist("assigned"))
 
+        db.session.commit()
+        return redirect(url_for("task"))
+    return render_template('editTask.html',user_list=user_list,todo=Todo.query.filter_by(id=task_id).first())
+    
 if __name__ == "__main__":
     with app.app_context():
         db.create_all()
