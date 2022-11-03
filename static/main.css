@@ -110,6 +110,10 @@ a {
     margin-top: 20px;
 }
 
+input[type="submit"] {
+    color: white;
+}
+
 .register-container {
     display: flex;
     flex-direction: column;
@@ -139,6 +143,10 @@ div.h {
     background-color: mediumseagreen;
     border-style: none;
     padding: 10px;
+}
+
+div.form-item {
+    margin-bottom: 20px;
 }
 
 .register-head {
