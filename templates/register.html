@@ -19,20 +19,23 @@
     <form action="/register" method="post">
         <div class="register-container">
             <h3 class="register-head">Register</h3>
-            <div>
-                <label>Name:</label>
-                <input type="text" required name="name" value="{{ request.form['name'] }}">
-                <br>
-                <label>Email:</label>
-                <input type="email" required name="email" value="{{ request.form['email'] }}">
-                <br>
-                <label>Username:</label>
-                <input type="text" required name="username" value="{{ request.form['username'] }}">
-                <br>
-                <label>Password:</label> <!--Change to Dropdown of users-->
-                <input type="password" required name="password" value="{{ request.form['password'] }}">
-                <br>
-            </div>
+            <div class = "register-container">
+                <div class="form-item">
+                    <label>Name:</label>
+                    <input type="text" required name="name" value="{{ request.form['name'] }}">
+                </div>
+                <div class="form-item">
+                    <label>Email:</label>
+                    <input type="email" required name="email" value="{{ request.form['email'] }}">
+                </div>
+                <div class="form-item">
+                    <label>Username:</label>
+                    <input type="text" required name="username" value="{{ request.form['username'] }}">
+                </div>
+                <div class="form-item last">
+                    <label>Password:</label> <!--Change to Dropdown of users-->
+                    <input type="text" required name="password" value="{{ request.form['password'] }}">
+                </div>
             <button class="submit-button" type="submit">Add</button>
         </div>
     </form>
