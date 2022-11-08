@@ -1,25 +1,23 @@
-<html>
-  <head>
+<html lang="English">
+<head>
     <title>Flask Intro - login page</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./static/main.css">
-  </head>
-  <body>
-    <div class="register-container">
-      <div class="h">
+</head>
+<body>
+<div class="register-container">
+    <div class="h">
         <h1>Please login</h1>
-      </div>
-      <form action="\login" method="post">
-        <input type="text" placeholder="Username" name="username" value="{{
-          request.form.username }}">
-        <input type="password" placeholder="Password" name="password" value="{{
-          request.form.password }}">
-        <input type="submit" value="Login">
-      </form>
-      {% if error %}
-        <p class="error"><strong>Error:</strong> {{ error }}
-      {% endif %}
-      <h1>{{message}}</h1>
     </div>
-  </body>
+    <form action="\login" method="post">
+        <input type="text" placeholder="Username" name="username" value="{{ request.form.username }}">
+        <input type="password" placeholder="Password" name="password" value="{{ request.form.password }}">
+        <input type="submit" value="Login">
+    </form>
+    {% if error %}
+        <p class="error"><strong>Error:</strong> {{ error }}
+    {% endif %}
+    <h1>{{ message }}</h1>
+</div>
+</body>
 </html>

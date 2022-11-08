@@ -15,16 +15,16 @@
         <button class="top-bar">Task</button>
     </a>
     <a href="/ViewUsers">
-        <button class="top-bar">User Managment</button>
+        <button class="top-bar">User Management</button>
     </a>
 </div>
-<h1 color="red">{{error}}</h1>
-{%if user.access==1%}
-<body>
+<h1>{{ error }}</h1>
+{% if user.access==1 %}
+    <body>
 
     <h1>Task Tracker</h1>
     <form action="/ViewUsers" method="post">
-        <div> 
+        <div>
             <h3>Register New User</h3>
             <label>Name:</label>
             <input required type="text" name="name" value="{{ request.form['name'] }}">
@@ -35,74 +35,94 @@
             <label>Username:</label>
             <input required type="text" name="username" value="{{ request.form['username'] }}">
             <br>
-            <label>Password:</label> 
+            <label>Password:</label>
             <input required type="text" name="password" value="{{ request.form['password'] }}">
             <br>
-            <select name="access"> <option value="0">Basic</option><option value="1">Admin</option> </select>
+            <select name="access">
+                <option value="0">Basic</option>
+                <option value="1">Admin</option>
+            </select>
             <br>
             <button type="submit">Add</button>
         </div>
     </form>
     <div class="todo">
-     <table>
-        <thead>
-        <tr>
-            <th>Username</th>
-            <th>Email</th>
-            <th>Name</th>
-            <th>Access</th>
-            <th>Password</th>
-            <th></th>
-            <th></th>
-        </thead>
-        </tr>
-        <tbody>
-    {% for user in user_list %}
-    <tr>
-    <form action="/updateUser/{{user.id}}" method="Post">
-    <td class="title"><input type="text" name="editUsername" value="{{ user.username }}"></td> 
-    <td><input type="text" name="editEmail" value="{{ user.email }}"></td>  
-    <td><input type="text" name="editName" value="{{ user.name }}"></td>  
-    <td><select name="editAccess">{% if user.access == 0 %}<option selected value="Basic">Basic</option><option value="Admin">Admin</option> {% elif user.access == 1 %}<option value="Basic">Basic</option><option selected value="Admin">Admin</option>{%endif%}"></select></td>
-    <td><input type="password" name="updatePass" value={{user.password}}>
-    <td><a href="/updateUser/{{user.id}}"><button type="submit">Update</button></a></td> </form> 
-    <td><a href="/deleteUser/{{user.id}}"><button>Delete</button></a>
-    </td></tr>
-    
-    {% endfor %}
-      
-</tbody>
-    </table>
+        <table>
+            <thead>
+            <tr>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Name</th>
+                <th>Access</th>
+                <th>Password</th>
+                <th></th>
+                <th></th>
+
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in user_list %}
+                <tr>
+                    <form action="/updateUser/{{ user.id }}" method="Post">
+                        <td class="title"><input type="text" name="editUsername" value="{{ user.username }}"></td>
+                        <td><input type="text" name="editEmail" value="{{ user.email }}"></td>
+                        <td><input type="text" name="editName" value="{{ user.name }}"></td>
+                        <td><select name="editAccess">{% if user.access == 0 %}
+                            <option selected value="Basic">Basic</option>
+                            <option value="Admin">Admin</option> {% elif user.access == 1 %}
+                            <option value="Basic">Basic</option>
+                            <option selected value="Admin">Admin</option>{% endif %}"></select></td>
+                        <td><input type="password" name="updatePass" value={{ user.password }}>
+                        <td><a href="/updateUser/{{ user.id }}">
+                            <button type="submit">Update</button>
+                        </a></td>
+                    </form>
+                    <td><a href="/deleteUser/{{ user.id }}">
+                        <button>Delete</button>
+                    </a>
+                    </td>
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+        </table>
     </div>
 
 
-{%else%}
-<div class="todo">
-    <table>
-       <thead>
-       <tr>
-           <th>Username</th>
-           <th>Email</th>
-           <th>Name</th>
-           <th>Password</th>
-           <th></th>
-       </thead>
-       </tr>
-       <tbody>
-   <tr>
-       <form action="/updateUser/{{user.id}}" method="Post">
-   <td class="title"><input type="text" name="editUsername" value="{{ user.username }}"></td> 
-   <td><input type="text" name="editEmail" value="{{ user.email }}"></td>  
-   <td><input type="text" name="editName" value="{{ user.name }}"></td>  
-   <td><input type="password" name="updatePass" value={{user.password}}>
-   <td><a href="/updateUser/{{user.id}}"><button type="submit">Update</button></a><td><input type="hidden" id="editAccess" name="editAccess" value="{{user.access}}"></td></td> </form> </td></tr>
-     
-</tbody>
-   </table>
-   </div>
+{% else %}
+    <div class="todo">
+        <table>
+            <thead>
+            <tr>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Name</th>
+                <th>Password</th>
+                <th></th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <form action="/updateUser/{{ user.id }}" method="Post">
+                    <td class="title"><input type="text" name="editUsername" value="{{ user.username }}"></td>
+                    <td><input type="text" name="editEmail" value="{{ user.email }}"></td>
+                    <td><input type="text" name="editName" value="{{ user.name }}"></td>
+                    <td><input type="password" name="updatePass" value={{ user.password }}>
+                    <td><a href="/updateUser/{{ user.id }}">
+                        <button type="submit">Update</button>
+                    </a>
+                    <td><input type="hidden" id="editAccess" name="editAccess" value="{{ user.access }}"></td>
+                </form>
+            </tr>
+
+            </tbody>
+        </table>
+    </div>
 
 
-{%endif%}
+{% endif %}
 </body>
 
 </html>

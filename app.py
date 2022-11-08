@@ -1,9 +1,8 @@
 import os  # os is used to get environment variables IP & PORT
 from datetime import datetime
-from flask import Flask, render_template, request, redirect, url_for
 from flask import Flask, session
 from flask import render_template
-from flask_session import Session
+from flask import request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)  # create an app

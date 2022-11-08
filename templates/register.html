@@ -13,33 +13,34 @@
     </a>
 </div>
 <body>
-    <div class="h">
-        <h1>Task Tracker</h1>
-    </div>  
-    <form action="/register" method="post">
+<div class="h">
+    <h1>Task Tracker</h1>
+</div>
+<form action="/register" method="post">
+    <div class="register-container">
+        <h3 class="register-head">Register</h3>
         <div class="register-container">
-            <h3 class="register-head">Register</h3>
-            <div class = "register-container">
-                <div class="form-item">
-                    <label>Name:</label>
-                    <input type="text" required name="name" value="{{ request.form['name'] }}">
-                </div>
-                <div class="form-item">
-                    <label>Email:</label>
-                    <input type="email" required name="email" value="{{ request.form['email'] }}">
-                </div>
-                <div class="form-item">
-                    <label>Username:</label>
-                    <input type="text" required name="username" value="{{ request.form['username'] }}">
-                </div>
-                <div class="form-item last">
-                    <label>Password:</label> <!--Change to Dropdown of users-->
-                    <input type="text" required name="password" value="{{ request.form['password'] }}">
-                </div>
+            <div class="form-item">
+                <label>Name:</label>
+                <input type="text" required name="name" value="{{ request.form['name'] }}">
+            </div>
+            <div class="form-item">
+                <label>Email:</label>
+                <input type="email" required name="email" value="{{ request.form['email'] }}">
+            </div>
+            <div class="form-item">
+                <label>Username:</label>
+                <input type="text" required name="username" value="{{ request.form['username'] }}">
+            </div>
+            <div class="form-item last">
+                <label>Password:</label> <!--Change to Dropdown of users-->
+                <input type="text" required name="password" value="{{ request.form['password'] }}">
+            </div>
             <button class="submit-button" type="submit">Add</button>
         </div>
-    </form>
-    <h1>{{message}}</h1>
-   </body>
-   
-   </html>
+    </div>
+</form>
+<h1>{{ message }}</h1>
+</body>
+
+</html>

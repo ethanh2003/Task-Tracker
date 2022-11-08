@@ -8,7 +8,7 @@ h2 {
 }
 
 label:not(.ex) {
-    /*Creates deign for submission fourms*/
+    /*Creates deign for submission forms*/
     display: block;
     float: left;
     width: 120px;
@@ -103,7 +103,7 @@ a {
 /* register page */
 .submit-button {
     background-color: mediumseagreen;
-    border-style: none; 
+    border-style: none;
     color: white;
     height: 50px;
     width: 200px;

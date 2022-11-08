@@ -15,32 +15,37 @@
         <button class="top-bar">Task</button>
     </a>
     <a href="/ViewUsers">
-        <button class="top-bar">User Managment</button>
+        <button class="top-bar">User Management</button>
     </a>
 </div>
 <div class="todo">
     <table>
-    <thead>
+        <thead>
         <tr>
             <th>Title</th>
             <th>Description</th>
             <th>Due</th>
             <th>Assigned</th>
-            <th></th> 
+            <th></th>
         </tr>
         </thead>
-       
+
         <tbody>
-        <form action="/editTask/{{todo.id}}" method="Post">
-        <td class="title"><input type="text" name="editTitle" value="{{ todo.title }}"></td> 
-        <td><input type="text" name="editDescription " value="{{ todo.description }}"></td>  
-        <td><input type="date" name="editDue" value="{{ todo.due }}"></td>  
-        <td> <select required name="assigned" id="assigned" multiple value={{todo.assigned}}>
-            <option value="All">All User</option>
-            {% for user in user_list %}
-            <option value="{{user.name}}">{{user.name}}</option>
-            {% endfor %}
-        </select></td>
-        <td><a href="/task"><button type="submit">Update</button></a></td></tbody> </form> 
-    </div>
-    </html>
+        <form action="/editTask/{{ todo.id }}" method="Post">
+            <td class="title"><input type="text" name="editTitle" value="{{ todo.title }}"></td>
+            <td><input type="text" name="editDescription " value="{{ todo.description }}"></td>
+            <td><input type="date" name="editDue" value="{{ todo.due }}"></td>
+            <td><select required name="assigned" id="assigned" multiple>
+                <option value="All">All User</option>
+                {% for user in user_list %}
+                    <option value="{{ user.name }}">{{ user.name }}</option>
+                {% endfor %}
+            </select></td>
+            <td><a href="/task">
+                <button type="submit">Update</button>
+            </a></td>
+        </form>
+        </tbody>
+    </table>
+</div>
+</html>
