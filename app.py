@@ -210,7 +210,7 @@ def editTask(task_id):
 
         db.session.commit()
         return redirect(url_for("task"))
-    return render_template('editTask.html', user_list=user_list, todo=Todo.query.filter_by(id=task_id).first())
+    return render_template('editTask.html', user_list=user_list,user=user, todo=Todo.query.filter_by(id=task_id).first())
 
 
 if __name__ == "__main__":
