@@ -50,7 +50,7 @@
 </form>
 <button onclick="toggle_visibility('myTask')">My Task</button>
 {% if user.access==1 %}
-<button onclick="toggle_visibility('allTask')">All Task</button>
+    <button onclick="toggle_visibility('allTask')">All Task</button>
 {% endif %}
 <button onclick="toggle_visibility('createdTask')">Created Task</button>
 <div id="myTask">
@@ -204,16 +204,17 @@
 <script type="text/javascript">
     {#shows only 'my task' on load#}
     document.getElementById("myTask").addEventListener("load", toggle_visibility('myTask'));
-   {# Switched between the 3 divs depending on click#}
-   function toggle_visibility(id) {
-       document.getElementById('allTask').style.display = 'none';
-       document.getElementById('myTask').style.display = 'none';
-       document.getElementById('createdTask').style.display = 'none';
-       const e = document.getElementById(id);
-       if(e.style.display == 'block')
-          e.style.display = 'none';
-       else
-          e.style.display = 'block';
-   }
+    {# Switched between the 3 divs depending on click#}
+
+    function toggle_visibility(id) {
+        document.getElementById('allTask').style.display = 'none';
+        document.getElementById('myTask').style.display = 'none';
+        document.getElementById('createdTask').style.display = 'none';
+        const e = document.getElementById(id);
+        if (e.style.display == 'block')
+            e.style.display = 'none';
+        else
+            e.style.display = 'block';
+    }
 </script>
 </html>
