@@ -48,11 +48,12 @@
         <button class="submit-button" type="submit">Add</button>
     </div>
 </form>
+<div >
 <button onclick="toggle_visibility('myTask')">My Task</button>
 {% if user.access==1 %}
     <button onclick="toggle_visibility('allTask')">All Task</button>
 {% endif %}
-<button onclick="toggle_visibility('createdTask')">Created Task</button>
+<button onclick="toggle_visibility('createdTask')">Created Task</button></div>
 <div id="myTask">
     <div class="h">
         <h1>My Task</h1>
