@@ -153,3 +153,7 @@ div.form-item {
     font-size: 25px;
     margin-bottom: 40px;
 }
+
+.filter-button {
+    margin-top: 50px;
+}
