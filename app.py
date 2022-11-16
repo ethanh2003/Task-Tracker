@@ -182,33 +182,43 @@ def logout():
 @app.route('/editTask/<int:task_id>', methods=['GET', 'POST'])
 def editTask(task_id):
     global user
-    user_list = User.query.all()
-    if request.method == 'POST':
-        editedTask = Todo.query.filter_by(id=task_id).first()
-        if request.form.get("editTitle", False) != editedTask.title:
-            editedTask.title = request.form["editTitle"]
-        if request.form.get("editDescription ", False) != editedTask.description:
-            editedTask.description = request.form["editDescription "]
-        if request.form.get("editDue", False) != editedTask.due:
-            due = datetime.strptime(request.form["editDue"], "%Y-%m-%d")
-            editedTask.due = due
-        if request.form.get("assigned", False) != editedTask.assigned:
-            editedTask.assigned = ', '.join(request.form.getlist("assigned"))
+    if user:
+        user_list = User.query.all()
+        if request.method == 'POST':
+            editedTask = Todo.query.filter_by(id=task_id).first()
+            if request.form.get("editTitle", False) != editedTask.title:
+                editedTask.title = request.form["editTitle"]
+            if request.form.get("editDescription ", False) != editedTask.description:
+                editedTask.description = request.form["editDescription "]
+            if request.form.get("editDue", False) != editedTask.due:
+                due = datetime.strptime(request.form["editDue"], "%Y-%m-%d")
+                editedTask.due = due
+            if request.form.get("assigned", False) != editedTask.assigned:
+                editedTask.assigned = ', '.join(request.form.getlist("assigned"))
 
-        db.session.commit()
-        return redirect(url_for("task"))
-    return render_template('editTask.html', user_list=user_list, user=user,
-                           todo=Todo.query.filter_by(id=task_id).first())
+            db.session.commit()
+            return redirect(url_for("task"))
+        return render_template('editTask.html', user_list=user_list, user=user,
+                               todo=Todo.query.filter_by(id=task_id).first())
+    else:
+        redirect(url_for('viewTask', task_id=task_id))
 @app.route('/viewTask/<int:task_id>')
 def viewTask(task_id):
     global user
-    form = CommentForm()
-    return render_template('viewTask.html', user=user, todo=Todo.query.filter_by(id=task_id).first(),form=form)
+    user_list = User.query.all()
+    if user == User:
+        return redirect(url_for('login'))
+    else:
+        form = CommentForm()
+        return render_template('viewTask.html', user=user,user_list=user_list, todo=Todo.query.filter_by(id=task_id).first(),form=form)
+
 
 @app.route('/task/<task_id>/comment', methods=['POST'])
 def new_comment(task_id):
     global user
-    if user:
+    if user == User:
+        return render_template('login.html', message="Please Log In To access this page")
+    else:
         comment_form = CommentForm()
         # validate_on_submit only validates using POST
         if comment_form.validate_on_submit():
@@ -219,9 +229,16 @@ def new_comment(task_id):
             db.session.commit()
 
         return redirect(url_for('viewTask', task_id=task_id))
+@app.route("/deleteComment/<int:comment_id>")
+def deleteComment(comment_id: int):
+    global user
+    comment = Comment.query.filter_by(id=comment_id).first()
+    task_id=comment.todo_id
+    db.session.delete(comment)
+    db.session.commit()
+    return redirect(url_for('viewTask', task_id=task_id))
 
-    else:
-        return redirect(url_for('login'))
+
 
 
 if __name__ == "__main__":
