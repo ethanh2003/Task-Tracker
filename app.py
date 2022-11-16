@@ -1,39 +1,26 @@
 import os  # os is used to get environment variables IP & PORT
 from datetime import datetime
+
 from flask import Flask, session
 from flask import render_template
 from flask import request, redirect, url_for
-from flask_sqlalchemy import SQLAlchemy
+
+from forms import CommentForm
+from database import db
+from models import User, Todo, Comment
 
 app = Flask(__name__)  # create an app
 
 # sqp setup
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.sqlite'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
+
 app.secret_key = "abc"
-
-
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(4150))
-    email = db.Column(db.String(4150), unique=True)
-    username = db.Column(db.String(100), unique=True)
-    password = db.Column(db.String(100))
-    access = db.Column(db.Boolean)  # True if admin, False otherwise
-
-
-class Todo(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(100))
-    description = db.Column(db.String(4150))
-    assigned = db.Column(db.String(100))
-    due = db.Column(db.Date)
-    complete = db.Column(db.Integer)
-    createdBy = db.Column(db.Integer)
-
-
+db.init_app(app)
 user = User
+
+
+
 
 
 @app.route("/")
@@ -210,7 +197,31 @@ def editTask(task_id):
 
         db.session.commit()
         return redirect(url_for("task"))
-    return render_template('editTask.html', user_list=user_list,user=user, todo=Todo.query.filter_by(id=task_id).first())
+    return render_template('editTask.html', user_list=user_list, user=user,
+                           todo=Todo.query.filter_by(id=task_id).first())
+@app.route('/viewTask/<int:task_id>')
+def viewTask(task_id):
+    global user
+    form = CommentForm()
+    return render_template('viewTask.html', user=user, todo=Todo.query.filter_by(id=task_id).first(),form=form)
+
+@app.route('/task/<task_id>/comment', methods=['POST'])
+def new_comment(task_id):
+    global user
+    if user:
+        comment_form = CommentForm()
+        # validate_on_submit only validates using POST
+        if comment_form.validate_on_submit():
+            # get comment data
+            comment_text = request.form['comment']
+            new_record = Comment(comment_text, int(task_id), user.id)
+            db.session.add(new_record)
+            db.session.commit()
+
+        return redirect(url_for('viewTask', task_id=task_id))
+
+    else:
+        return redirect(url_for('login'))
 
 
 if __name__ == "__main__":
