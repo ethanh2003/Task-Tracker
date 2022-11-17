@@ -33,7 +33,7 @@
             <tbody>
                 <tr>
 
-                        <td class="title"><a href="/viewTask/{{ todo.id }}">{{ todo.title }}</a></td>
+                        <td class="title">{{ todo.title }}</td>
                         <td>{{ todo.description }}</td>
                         <td>{{ todo.due }}</td>
                         <td>{{ todo.assigned }}</td>
@@ -60,7 +60,7 @@
     </div>
     {% if todo.comments %}
   {% if todo.comments|length > 0 %}
-    <h2>Comments</h2>
+    <h1>Comments</h1>
     <ul>
     {% for comment in todo.comments %}
         {% for commentUser in user_list %}
@@ -74,7 +74,7 @@
 {% endif %}
 <form action="{{ url_for('new_comment', task_id=todo.id) }}" method="post">
   <div>
-    <h2 >Add a comment</h2>
+    <h1>Add a comment</h1>
     <div >
       {{ form.comment.label }} <br/> {{ form.comment }}
     </div>

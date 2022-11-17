@@ -34,7 +34,7 @@ td {
     height: 75px;
 }
 
-td > a > button {
+td > a > button:not(.exclude){
     width: 200px;
     height: 30px;
     background-color: goldenrod;
