@@ -65,7 +65,7 @@
     {% for comment in todo.comments %}
         {% for commentUser in user_list %}
             {% if commentUser.id==comment.user_id %}
-                <li>{{ comment.content }} <b><br>&nbsp;-{{ commentUser.name }}</b> {% if user.access==1 or comment.user_id==user.id%}<a href="/deleteComment/{{ comment.id }}"><button>Delete</button></a>{% endif %}</li>
+                <li>{{ comment.content }} <b><br>&nbsp;-{{ commentUser.name }}</b> {% if user.access==1 or comment.user_id==user.id or todo.createdBy==user.id%}<a href="/deleteComment/{{ comment.id }}"><button>Delete</button></a>{% endif %}</li>
             {% endif %}
             {% endfor %}
     {% endfor %}
