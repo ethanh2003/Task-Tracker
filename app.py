@@ -200,6 +200,8 @@ def editTask(task_id):
                                todo=Todo.query.filter_by(id=task_id).first())
     else:
         redirect(url_for('viewTask', task_id=task_id))
+
+
 @app.route('/viewTask/<int:task_id>')
 def viewTask(task_id):
     global user
@@ -208,7 +210,8 @@ def viewTask(task_id):
         return redirect(url_for('login'))
     else:
         form = CommentForm()
-        return render_template('viewTask.html', user=user,user_list=user_list, todo=Todo.query.filter_by(id=task_id).first(),form=form)
+        return render_template('viewTask.html', user=user, user_list=user_list,
+                               todo=Todo.query.filter_by(id=task_id).first(), form=form)
 
 
 @app.route('/task/<task_id>/comment', methods=['POST'])
@@ -233,37 +236,41 @@ def new_comment(task_id):
 def deleteComment(comment_id: int):
     global user
     comment = Comment.query.filter_by(id=comment_id).first()
-    task_id=comment.todo_id
+    task_id = comment.todo_id
     db.session.delete(comment)
     db.session.commit()
     return redirect(url_for('viewTask', task_id=task_id))
+
+
 @app.route('/pin/<task_id>')
-def pinTask(task_id):
+def pinTask(task_id: str):
     global user
     user_id = user.id
-    editUser = User.query.filter_by(id=user_id).first()
-    pinned = str(editUser.pinnedTask)
-    if editUser.pinnedTask != "":
-        pinned = pinned + ' ' +  task_id
+    edit_user = User.query.filter_by(id=user_id).first()
+    pinned = str(edit_user.pinnedTask)
+    if edit_user.pinnedTask != "":
+        if task_id not in pinned:
+            pinned = pinned + '(' + task_id + ')'
     else:
-        pinned=task_id
-    editUser.pinnedTask = pinned
+        pinned = "(" + task_id + ")"
+    edit_user.pinnedTask = pinned
     db.session.commit()
     user = User.query.filter_by(id=user.id).first()
     return redirect(url_for('task'))
+
+
 @app.route('/unpin/<task_id>')
-def unpinTask(task_id: int):
+def unpinTask(task_id: str):
     global user
     user_id = user.id
-    editUser = User.query.filter_by(id=user_id).first()
-    pinned = str(editUser.pinnedTask)
-    if ' ' in pinned:
-        remove = " " + task_id
-        remove = str(remove)
-        pinned = pinned.replace(remove, "")
-    else:
-        pinned = ''
-    editUser.pinnedTask = pinned
+    edit_user = User.query.filter_by(id=user_id).first()
+    pinned = str(edit_user.pinnedTask)
+    remove = '('+task_id+')'
+    remove = str(remove)
+    pinned = pinned.replace(remove, "")
+    print(remove)
+    print(pinned)
+    edit_user.pinnedTask = pinned
     db.session.commit()
     user = User.query.filter_by(id=user.id).first()
     return redirect(url_for('task'))
