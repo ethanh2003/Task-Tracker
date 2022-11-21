@@ -46,15 +46,21 @@ a {
     text-decoration: none;
 }
 
+button:hover {
+    opacity: 0.8;
+    cursor: pointer;
+}
+
 /*Classes*/
 
 /* table on the task page */
 .todo {
     text-align: center;
     background-color: whitesmoke;
-    width: 99%;
+    width: 90%;
     margin-left: auto;
     margin-right: auto;
+    padding: 2%;
 }
 
 .inProgress {
@@ -156,4 +162,8 @@ div.form-item {
 
 .filter-button {
     margin-top: 50px;
+}
+
+.view-page {
+    margin-bottom: 20px;
 }

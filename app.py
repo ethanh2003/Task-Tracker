@@ -20,9 +20,6 @@ db.init_app(app)
 user = User
 
 
-
-
-
 @app.route("/")
 def index():
     global user
@@ -229,6 +226,8 @@ def new_comment(task_id):
             db.session.commit()
 
         return redirect(url_for('viewTask', task_id=task_id))
+
+
 @app.route("/deleteComment/<int:comment_id>")
 def deleteComment(comment_id: int):
     global user
@@ -237,8 +236,6 @@ def deleteComment(comment_id: int):
     db.session.delete(comment)
     db.session.commit()
     return redirect(url_for('viewTask', task_id=task_id))
-
-
 
 
 if __name__ == "__main__":
