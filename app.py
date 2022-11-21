@@ -129,8 +129,9 @@ def updateUser(user_id: int):
                 access = True
             if access != editUser.access:
                 editUser.access = access
-            db.session.commit()
-    return redirect(url_for("task"))
+        db.session.commit()
+    user = User.query.filter_by(id=user.id).first()
+    return redirect(url_for("viewUsers"))
 
 
 @app.route('/ViewUsers', methods=['GET', 'POST'])
