@@ -8,12 +8,16 @@ class User(db.Model):
     username = db.Column(db.String(100), unique=True)
     password = db.Column(db.String(100))
     access = db.Column(db.Boolean)  # True if admin, False otherwise
-    def __init__(self,name,email,username,password,access):
-        self.name=name
-        self.email=email
-        self.username=username
-        self.password=password
-        self.access=access
+    pinnedTask = db.Column(db.String(4150))
+
+    def __init__(self, name, email, username, password, access):
+        self.name = name
+        self.email = email
+        self.username = username
+        self.password = password
+        self.access = access
+        self.pinnedTask = ""
+
 
 class Todo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -25,13 +29,14 @@ class Todo(db.Model):
     createdBy = db.Column(db.Integer)
     comments = db.relationship("Comment", backref="comment", cascade="all, delete-orphan", lazy=True)
 
-    def __init__(self,title,description,assigned,due,complete,createdBy):
-        self.title=title
-        self.description=description
-        self.assigned=assigned
-        self.due=due
-        self.complete=complete
-        self.createdBy=createdBy
+    def __init__(self, title, description, assigned, due, complete, createdBy):
+        self.title = title
+        self.description = description
+        self.assigned = assigned
+        self.due = due
+        self.complete = complete
+        self.createdBy = createdBy
+
 
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)

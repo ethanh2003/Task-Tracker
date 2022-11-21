@@ -237,8 +237,36 @@ def deleteComment(comment_id: int):
     db.session.delete(comment)
     db.session.commit()
     return redirect(url_for('viewTask', task_id=task_id))
+@app.route('/pin/<task_id>')
+def pinTask(task_id):
+    global user
+    user_id = user.id
+    editUser = User.query.filter_by(id=user_id).first()
+    pinned = str(editUser.pinnedTask)
+    if editUser.pinnedTask != "":
+        pinned = pinned + ' ' +  task_id
+    else:
+        pinned=task_id
+    editUser.pinnedTask = pinned
+    db.session.commit()
 
+    return redirect(url_for('task'))
+@app.route('/unpin/<task_id>')
+def unpinTask(task_id: int):
+    global user
+    user_id = user.id
+    editUser = User.query.filter_by(id=user_id).first()
+    pinned = str(editUser.pinnedTask)
+    if ' ' in pinned:
+        remove = " " + task_id
+        remove = str(remove)
+        pinned = pinned.replace(remove, "")
+    else:
+        pinned = ''
+    editUser.pinnedTask = pinned
+    db.session.commit()
 
+    return redirect(url_for('task'))
 
 
 if __name__ == "__main__":
