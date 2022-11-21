@@ -248,7 +248,7 @@ def pinTask(task_id):
         pinned=task_id
     editUser.pinnedTask = pinned
     db.session.commit()
-
+    user = User.query.filter_by(id=user.id).first()
     return redirect(url_for('task'))
 @app.route('/unpin/<task_id>')
 def unpinTask(task_id: int):
@@ -264,7 +264,7 @@ def unpinTask(task_id: int):
         pinned = ''
     editUser.pinnedTask = pinned
     db.session.commit()
-
+    user = User.query.filter_by(id=user.id).first()
     return redirect(url_for('task'))
 
 
