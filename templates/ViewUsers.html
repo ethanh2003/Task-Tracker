@@ -21,11 +21,12 @@
 <h1>{{ error }}</h1>
 {% if user.access==1 %}
     <body>
-
-    <h1>Task Tracker</h1>
+    <div class="h">
+        <h1>Task Tracker</h1>
+    </div>
     <form action="/ViewUsers" method="post">
-        <div>
-            <h3>Register New User</h3>
+        <div class="register-container">
+            <h3 class="register-head">Register New User</h3>
             <label>Name:</label>
             <input required type="text" name="name" value="{{ request.form['name'] }}">
             <br>
@@ -43,7 +44,8 @@
                 <option value="1">Admin</option>
             </select>
             <br>
-            <button type="submit">Add</button>
+            <button class="submit-button" type="submit">Add</button>
+            <br>
         </div>
     </form>
     <div class="todo">
