@@ -7,17 +7,21 @@
     <title>Task Tracker</title>
     <link rel="stylesheet" href="../static/main.css">
 </head>
-<div class="top-contain">
-    <a href="/logout">
-        <button class="top-bar">Log Out</button>
+<div class= "index-wrapper">
+    <a class="index-header" href="/">
+        Task Tracker
     </a>
-    <a href="/task">
-        <button class="top-bar">Task</button>
-    </a>
-
-    <a href="/ViewUsers">
-        <button class="top-bar">User Management</button>
-    </a>
+    <div class="top-contain">
+        <a href="/logout">
+            <button class="top-bar">Log Out</button>
+        </a>
+        <a href="/task">
+            <button class="top-bar">Task</button>
+        </a>
+            <a href="/ViewUsers">
+                <button class="top-bar">User Management</button>
+            </a>
+    </div>
 </div>
 <div class="todo">
     <table>
@@ -43,7 +47,7 @@
                 {% endfor %}
             </select></td>
             <td><a href="/task">
-                <button type="submit">Update</button>
+                <button type="submit" class="task-button">Update</button>
             </a></td>
         </form>
         </tbody>

@@ -7,23 +7,26 @@
     <title>Task Tracker</title>
     <link rel="stylesheet" href="./static/main.css">
 </head>
-<div class="top-contain">
-    <a href="/logout">
-        <button class="top-bar">Log Out</button>
+<div class= "index-wrapper">
+    <a class="index-header" href="/">
+        Task Tracker
     </a>
-    <a href="/task">
-        <button class="top-bar">Task</button>
-    </a>
-    <a href="/ViewUsers">
-        <button class="top-bar">User Management</button>
-    </a>
+    <div class="top-contain">
+        <a href="/logout">
+            <button class="top-bar">Log Out</button>
+        </a>
+        <a href="/task">
+            <button class="top-bar">Task</button>
+        </a>
+            <a href="/ViewUsers">
+                <button class="top-bar">User Management</button>
+            </a>
+    </div>
 </div>
 <h1>{{ error }}</h1>
 {% if user.access==1 %}
     <body>
-    <div class="h">
-        <h1>Task Tracker</h1>
-    </div>
+
     <form action="/ViewUsers" method="post">
         <div class="register-container">
             <h3 class="register-head">Register New User</h3>
@@ -39,10 +42,12 @@
             <label>Password:</label>
             <input required type="text" name="password" value="{{ request.form['password'] }}">
             <br>
-            <select name="access">
+            <label>Access Level:</label>
+            <select name="access"> 
                 <option value="0">Basic</option>
                 <option value="1">Admin</option>
             </select>
+            
             <br>
             <button class="submit-button" type="submit">Add</button>
             <br>
@@ -76,11 +81,11 @@
                             <option selected value="Admin">Admin</option>{% endif %}"></select></td>
                         <td><input type="password" name="updatePass" value={{ user.password }}>
                         <td><a href="/updateUser/{{ user.id }}">
-                            <button type="submit">Update</button>
+                            <button type="submit" class="task-button">Update</button>
                         </a></td>
                     </form>
                     <td><a href="/deleteUser/{{ user.id }}">
-                        <button>Delete</button>
+                        <button class="task-button">Delete</button>
                     </a>
                     </td>
                 </tr>

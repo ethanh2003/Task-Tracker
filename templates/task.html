@@ -6,39 +6,42 @@
     <title>Task Tracker</title>
     <link rel="stylesheet" href="./static/main.css">
 </head>
-<body>
-<div class="top-contain">
-    <a href="/logout">
-        <button class="top-bar">Log Out</button>
-    </a>
-    <a href="/task">
-        <button class="top-bar">Task</button>
-    </a>
-        <a href="/ViewUsers">
-            <button class="top-bar">User Management</button>
-        </a>
 </div>
-<div class="h">
-    <h1>Task Tracker</h1>
+<body>
+<div class= "index-wrapper">
+    <a class="index-header" href="/">
+        Task Tracker
+    </a>
+    <div class="top-contain">
+        <a href="/logout">
+            <button class="top-bar">Log Out</button>
+        </a>
+        <a href="/task">
+            <button class="top-bar">Task</button>
+        </a>
+            <a href="/ViewUsers">
+                <button class="top-bar">User Management</button>
+            </a>
+    </div>
 </div>
 <form action="/add" method="post">
     <div class="register-container">
         <h3>Add Task</h3>
         <div class="form-item">
             <label>Task Title:</label>
-            <input required type="text" name="title" placeholder="Task">
+            <input required class= "input-form" type="text" name="title" placeholder="Task">
         </div>
         <div class="form-item">
             <label>Description:</label>
-            <input type="text" name="description" placeholder="Description">
+            <input type="text" class= "input-form" name="description" placeholder="Description">
         </div>
         <div class="form-item">
             <label>Due:</label>
-            <input required type="date" name="due">
+            <input required type="date" class= "input-form" name="due">
         </div>
         <label>Assigned:</label>
         <select required name="assigned" id="assigned" multiple>
-            <option value="All">All User</option>
+            <option value="All">All Users</option>
             {% for user in user_list %}
                 <option value="{{ user.name }}">{{ user.name }}</option>
             {% endfor %}
@@ -46,16 +49,16 @@
         <button class="submit-button" type="submit">Add</button>
     </div>
 </form>
-<div class="top-contain">
-    <button class="top-bar filter-button" onclick="toggle_visibility('myTask')">My Task</button>
+<div class="float-contain">
+    <button class="top-bar filter-button" onclick="toggle_visibility('myTask')">My Tasks</button>
     {% if user.access==1 %}
-        <button class="top-bar filter-button" onclick="toggle_visibility('allTask')">All Task</button>
+        <button class="top-bar filter-button" onclick="toggle_visibility('allTask')">All Tasks</button>
     {% endif %}
-    <button class="top-bar filter-button" onclick="toggle_visibility('createdTask')">Created Task</button>
+    <button class="top-bar filter-button" onclick="toggle_visibility('createdTask')">Created Tasks</button>
 </div>
 {% if user.pinnedTask != "" %}
     <div class="h">
-        <h1>Pinned Task</h1>
+        <h1>Pinned Tasks</h1>
     </div>
 <div id="pinnedTask">
         <div id="todo" class="todo">
@@ -85,14 +88,14 @@
                             <button class="complete">Complete</button>
                         {% endif %}</td>
                         <td><a href="/update/{{ todo.id }}">
-                            <button>Update</button>
+                            <button class="task-button">Update</button>
                         </a></td>
                         {% if todo.createdBy == user.id or user.access == 1 %}
                             <td><a href="/editTask/{{ todo.id }}">
-                                <button>Edit</button>
+                                <button class="task-button">Edit</button>
                             </a></td>
                             <td><a href="/delete/{{ todo.id }}">
-                                <button>Delete</button>
+                                <button class="task-button-delete">Delete</button>
                             </a></td>
                         {% endif %}</tr>
                     {% endif %}
@@ -104,7 +107,7 @@
 {% endif %}
 <div id="myTask">
     <div class="h">
-        <h1>My Task</h1>
+        <h1 class="task-h">My Tasks</h1>
     </div>
     <div id="todo" class="todo">
         <table>
@@ -114,6 +117,7 @@
             <th>Due Date</th>
             <th>Assigned To</th>
             <th>Status</th>
+            <th></th>
             <th></th>
             <th></th>
             </thead>
@@ -132,15 +136,15 @@
                         {% else %}
                             <button class="complete">Complete</button>
                         {% endif %}</td>
-                        <td><a href="/update/{{ todo.id }}">
-                            <button>Update</button>
+                        <td class="td-button"><a href="/update/{{ todo.id }}">
+                            <button class="task-button">Update</button>
                         </a></td>
                         {% if todo.createdBy == user.id or user.access == 1 %}
-                            <td><a href="/editTask/{{ todo.id }}">
-                                <button>Edit</button>
+                            <td class="td-button"><a href="/editTask/{{ todo.id }}">
+                                <button class="task-button">Edit</button>
                             </a></td>
-                            <td><a href="/delete/{{ todo.id }}">
-                                <button>Delete</button>
+                            <td class="td-button"><a href="/delete/{{ todo.id }}">
+                                <button class="task-button-delete">Delete</button>
                             </a></td>
                         {% endif %}</tr>
 
@@ -153,7 +157,7 @@
 <div id="allTask">
     {% if user.access==1 %}
         <div class="h">
-            <h1>All Task</h1>
+            <h1>All Tasks</h1>
         </div>
         <div id="todo" class="todo">
             <table>
@@ -183,14 +187,14 @@
                             <button class="complete">Complete</button>{% endif %}
                         </td>
                         <td><a href="/update/{{ todo.id }}">
-                            <button>Update</button>
+                            <button class="task-button">Update</button>
                         </a></td>
                         {% if todo.createdBy == user.id or user.access == 1 %}
                             <td><a href="/editTask/{{ todo.id }}">
-                                <button>Edit</button>
+                                <button class="task-button">Edit</button>
                             </a></td>
                             <td><a href="/delete/{{ todo.id }}">
-                                <button>Delete</button>
+                                <button class="task-button-delete">Delete</button>
                             </a></td>
                         {% endif %}</tr>
 
@@ -202,7 +206,7 @@
 </div>
 <div id="createdTask">
     <div class="h">
-        <h1>Task Created</h1>
+        <h1>Created Tasks</h1>
     </div>
     <div id="todo" class="todo">
         <table>
@@ -233,14 +237,14 @@
                             <button class="complete">Complete</button>{% endif %}
                         </td>
                         <td><a href="/update/{{ todo.id }}">
-                            <button>Update</button>
+                            <button class="task-button">Update</button>
                         </a></td>
                         {% if todo.createdBy == user.id or user.access == 1 %}
                             <td><a href="/editTask/{{ todo.id }}">
-                                <button>Edit</button>
+                                <button class="task-button">Edit</button>
                             </a></td>
                             <td><a href="/delete/{{ todo.id }}">
-                                <button>Delete</button>
+                                <button class="task-button-delete">Delete</button>
                             </a></td>
                         {% endif %}</tr>
                 {% endif %}

@@ -6,6 +6,6 @@ class CommentForm(FlaskForm):
     class Meta:
         csrf = False
 
-    comment = TextAreaField('Comment', validators=[Length(min=1)])
+    comment = TextAreaField(validators=[Length(min=1)])
 
     submit = SubmitField('Add Comment')

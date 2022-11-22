@@ -7,18 +7,22 @@
     <link rel="stylesheet" href="../static/main.css">
 </head>
 <body>
-<div class="top-contain view-page">
-    <a href="/logout">
-        <button class="top-bar">Log Out</button>
-    </a>
-    <a href="/task">
-        <button class="top-bar">Task</button>
-    </a>
-
-        <a href="/ViewUsers">
-            <button class="top-bar">User Management</button>
+    <div class= "index-wrapper">
+        <a class="index-header" href="/">
+            Task Tracker
         </a>
-</div>
+        <div class="top-contain">
+            <a href="/logout">
+                <button class="top-bar">Log Out</button>
+            </a>
+            <a href="/task">
+                <button class="top-bar">Task</button>
+            </a>
+                <a href="/ViewUsers">
+                    <button class="top-bar">User Management</button>
+                </a>
+        </div>
+    </div>
     <div id="todo" class="todo">
         <table>
             <thead>
@@ -44,14 +48,14 @@
                         <button class="complete">Complete</button>
                     {% endif %}</td>
                     <td><a href="/update/{{ todo.id }}">
-                        <button>Update</button>
+                        <button class="task-button">Update</button>
                     </a></td>
                     {% if todo.createdBy == user.id or user.access == 1 %}
                         <td><a href="/editTask/{{ todo.id }}">
-                            <button>Edit</button>
+                            <button class="task-button">Edit</button>
                         </a></td>
                         <td><a href="/delete/{{ todo.id }}">
-                            <button>Delete</button>
+                            <button class="task-button">Delete</button>
                         </a></td>
                     {% endif %}</tr>
             </tbody>
@@ -59,25 +63,28 @@
     </div>
     {% if todo.comments %}
   {% if todo.comments|length > 0 %}
-    <h1>Comments</h1>
-    <ul>
+  <div class="comment-container"> <h2>Comments</h2>
+    <div>
     {% for comment in todo.comments %}
         {% for commentUser in user_list %}
             {% if commentUser.id==comment.user_id %}
-                <li>{{ comment.content }} <b><br>&nbsp;-{{ commentUser.name }}</b> {% if user.access==1 or comment.user_id==user.id or todo.createdBy==user.id%}<a href="/deleteComment/{{ comment.id }}"><button>Delete</button></a>{% endif %}</li>
+                <div class="comment-card"><div>{{ comment.content }} </div><div><b>&nbsp;-{{ commentUser.name }}</b></div> {% if user.access==1 or comment.user_id==user.id or todo.createdBy==user.id%}
+                <a href="/deleteComment/{{ comment.id }}"><button>Delete</button></a>{% endif %}</div>
             {% endif %}
             {% endfor %}
     {% endfor %}
-    </ul>
+    </div>
   {% endif %}
 {% endif %}
+</div>
 <form action="{{ url_for('new_comment', task_id=todo.id) }}" method="post">
-  <div class="register-container">
-    <h1>Add a comment</h1>
-    <div >
+  <div class="submit-container">
+    <h2>Add a comment</h2>
+    <div>
       {{ form.comment.label }} <br/> {{ form.comment }}
     </div>
     {{ form.submit }}
+    
   </div>
 </form>
 </body>
