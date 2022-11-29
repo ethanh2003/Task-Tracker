@@ -71,6 +71,29 @@ def delete(todo_id: int):
     return redirect(url_for("task"))
 
 
+@app.route("/task/<string:sort_id>")
+def sortTask(sort_id):
+    global user
+    if user == User:
+        return render_template('login.html', message="Please Log In To access this page")
+    todo_list = None
+
+    if sort_id == "Title":
+        todo_list = Todo.query.order_by(Todo.title)
+    if sort_id == "Description":
+        todo_list = Todo.query.order_by(Todo.description)
+    if sort_id == "Due":
+        todo_list = Todo.query.order_by(Todo.due)
+    if sort_id == "AssignedTo":
+        todo_list = Todo.query.order_by(Todo.assigned)
+    if sort_id == "Status":
+        todo_list = Todo.query.order_by(Todo.complete)
+
+
+    user_list = User.query.all()
+    return render_template('task.html', todo_list=todo_list, user_list=user_list, user=user)
+
+
 @app.route("/register", methods=('GET', 'POST'))
 def register():
     global user
@@ -265,11 +288,9 @@ def unpinTask(task_id: str):
     user_id = user.id
     edit_user = User.query.filter_by(id=user_id).first()
     pinned = str(edit_user.pinnedTask)
-    remove = '('+task_id+')'
+    remove = '(' + task_id + ')'
     remove = str(remove)
     pinned = pinned.replace(remove, "")
-    print(remove)
-    print(pinned)
     edit_user.pinnedTask = pinned
     db.session.commit()
     user = User.query.filter_by(id=user.id).first()
