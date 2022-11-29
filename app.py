@@ -164,7 +164,7 @@ def update_user(user_id: int):
                 edit_user.access = access
         db.session.commit()
     user = User.query.filter_by(id=user.id).first()
-    return redirect(url_for("viewUsers"))
+    return redirect(url_for("view_users"))
 
 
 @app.route('/ViewUsers', methods=['GET', 'POST'])
@@ -190,7 +190,7 @@ def view_users():
             new_user = User(name=name, email=email, username=username, password=password, access=access)
             db.session.add(new_user)
             db.session.commit()
-            return redirect(url_for("viewUsers"))
+            return redirect(url_for("view_users"))
     return render_template('ViewUsers.html', user_list=user_list, user=user)
 
 
@@ -200,7 +200,7 @@ def delete_user(user_id: int):
     deleted_user = User.query.filter_by(id=user_id).first()
     db.session.delete(deleted_user)
     db.session.commit()
-    return redirect(url_for("viewUsers"))
+    return redirect(url_for("view_users"))
 
 
 @app.route("/logout")
@@ -232,7 +232,7 @@ def edit_task(task_id):
         return render_template('editTask.html', user_list=user_list, user=user,
                                todo=Todo.query.filter_by(id=task_id).first())
     else:
-        redirect(url_for('viewTask', task_id=task_id))
+        redirect(url_for('view_task', task_id=task_id))
 
 
 @app.route('/viewTask/<int:task_id>')
@@ -262,7 +262,7 @@ def new_comment(task_id):
             db.session.add(new_record)
             db.session.commit()
 
-        return redirect(url_for('viewTask', task_id=task_id))
+        return redirect(url_for('view_task', task_id=task_id))
 
 
 @app.route("/deleteComment/<int:comment_id>")
@@ -272,7 +272,7 @@ def delete_comment(comment_id: int):
     task_id = comment.todo_id
     db.session.delete(comment)
     db.session.commit()
-    return redirect(url_for('viewTask', task_id=task_id))
+    return redirect(url_for('view_task', task_id=task_id))
 
 
 @app.route('/pin/<task_id>')
