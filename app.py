@@ -71,23 +71,34 @@ def delete(todo_id: int):
     return redirect(url_for("task"))
 
 
-@app.route("/task/<string:sort_id>")
-def sortTask(sort_id):
+@app.route("/task/<string:sort_id>/<int:order_id>")
+def sortTask(sort_id,order_id):
     global user
     if user == User:
         return render_template('login.html', message="Please Log In To access this page")
     todo_list = None
-
-    if sort_id == "Title":
-        todo_list = Todo.query.order_by(Todo.title)
-    if sort_id == "Description":
-        todo_list = Todo.query.order_by(Todo.description)
-    if sort_id == "Due":
-        todo_list = Todo.query.order_by(Todo.due)
-    if sort_id == "AssignedTo":
-        todo_list = Todo.query.order_by(Todo.assigned)
-    if sort_id == "Status":
-        todo_list = Todo.query.order_by(Todo.complete.desc())
+    if order_id == 0:
+        if sort_id == "Title":
+            todo_list = Todo.query.order_by(Todo.title)
+        if sort_id == "Description":
+            todo_list = Todo.query.order_by(Todo.description)
+        if sort_id == "Due":
+            todo_list = Todo.query.order_by(Todo.due)
+        if sort_id == "AssignedTo":
+            todo_list = Todo.query.order_by(Todo.assigned)
+        if sort_id == "Status":
+            todo_list = Todo.query.order_by(Todo.complete.desc())
+    elif order_id == 1:
+        if sort_id == "Title":
+            todo_list = Todo.query.order_by(Todo.title.desc())
+        if sort_id == "Description":
+            todo_list = Todo.query.order_by(Todo.description.desc())
+        if sort_id == "Due":
+            todo_list = Todo.query.order_by(Todo.due.desc())
+        if sort_id == "AssignedTo":
+            todo_list = Todo.query.order_by(Todo.assigned.desc())
+        if sort_id == "Status":
+            todo_list = Todo.query.order_by(Todo.complete)
 
 
     user_list = User.query.all()
