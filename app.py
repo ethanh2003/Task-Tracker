@@ -72,12 +72,12 @@ def delete(todo_id: int):
 
 
 @app.route("/task/<string:sort_id>/<int:order_id>")
-def sortTask(sort_id, order_id):
+def sort_task(sort_id, order_id):
     global user
     if user == User:
         return render_template('login.html', message="Please Log In To access this page")
     todo_list = None
-    if order_id == 0:
+    if order_id == 0:  # 0 sorts in ascending order
         if sort_id == "Title":
             todo_list = Todo.query.order_by(Todo.title)
         if sort_id == "Description":
@@ -88,7 +88,7 @@ def sortTask(sort_id, order_id):
             todo_list = Todo.query.order_by(Todo.assigned)
         if sort_id == "Status":
             todo_list = Todo.query.order_by(Todo.complete.desc())
-    elif order_id == 1:
+    elif order_id == 1:  # 1 sorts in descending order
         if sort_id == "Title":
             todo_list = Todo.query.order_by(Todo.title.desc())
         if sort_id == "Description":
@@ -127,48 +127,48 @@ def login():
     global user
     error = None
     if request.method == 'POST':
-        Current_user = User.query.filter_by(username=request.form['username']).first()
-        if Current_user is None:
+        current_user = User.query.filter_by(username=request.form['username']).first()
+        if current_user is None:
             error = 'Invalid Username. Please try again.'
-        elif Current_user.password != request.form['password']:
+        elif current_user.password != request.form['password']:
             error = 'Invalid Password. Please try again.'
-            Current_user = None
+            current_user = None
         else:
-            session["user"] = Current_user.id
+            session["user"] = current_user.id
             global user
-            user = Current_user
+            user = current_user
             return redirect(url_for('task'))
     return render_template('login.html', error=error)
 
 
 @app.route("/updateUser/<int:user_id>", methods=['GET', 'POST'])
-def updateUser(user_id: int):
+def update_user(user_id: int):
     global user
-    user_list = User.query.all()
+    # user_list = User.query.all()
     if request.method == 'POST':
-        editUser = User.query.filter_by(id=user_id).first()
-        if request.form.get("updatePass", False) != editUser.password:
-            editUser.password = request.form["updatePass"]
-        if request.form.get("editEmail", False) != editUser.email:
-            editUser.email = request.form["editEmail"]
-        if request.form.get("editUsername", False) != editUser.username:
-            editUser.username = request.form["editUsername"]
-        if request.form.get("editName", False) != editUser.name:
-            editUser.name = request.form["editName"]
+        edit_user = User.query.filter_by(id=user_id).first()
+        if request.form.get("updatePass", False) != edit_user.password:
+            edit_user.password = request.form["updatePass"]
+        if request.form.get("editEmail", False) != edit_user.email:
+            edit_user.email = request.form["editEmail"]
+        if request.form.get("editUsername", False) != edit_user.username:
+            edit_user.username = request.form["editUsername"]
+        if request.form.get("editName", False) != edit_user.name:
+            edit_user.name = request.form["editName"]
         if user.access == 1:
             if request.form.get("editAccess", False) == "Basic":
                 access = False
             elif request.form.get("editAccess", False) == "Admin":
                 access = True
-            if access != editUser.access:
-                editUser.access = access
+            if access != edit_user.access:
+                edit_user.access = access
         db.session.commit()
     user = User.query.filter_by(id=user.id).first()
     return redirect(url_for("viewUsers"))
 
 
 @app.route('/ViewUsers', methods=['GET', 'POST'])
-def viewUsers():
+def view_users():
     global user
     user_list = User.query.all()
     if user == User:
@@ -195,10 +195,10 @@ def viewUsers():
 
 
 @app.route("/deleteUser/<int:user_id>")
-def deleteUser(user_id: int):
+def delete_user(user_id: int):
     global user
-    deletedUser = User.query.filter_by(id=user_id).first()
-    db.session.delete(deletedUser)
+    deleted_user = User.query.filter_by(id=user_id).first()
+    db.session.delete(deleted_user)
     db.session.commit()
     return redirect(url_for("viewUsers"))
 
@@ -211,21 +211,21 @@ def logout():
 
 
 @app.route('/editTask/<int:task_id>', methods=['GET', 'POST'])
-def editTask(task_id):
+def edit_task(task_id):
     global user
     if user:
         user_list = User.query.all()
         if request.method == 'POST':
-            editedTask = Todo.query.filter_by(id=task_id).first()
-            if request.form.get("editTitle", False) != editedTask.title:
-                editedTask.title = request.form["editTitle"]
-            if request.form.get("editDescription ", False) != editedTask.description:
-                editedTask.description = request.form["editDescription "]
-            if request.form.get("editDue", False) != editedTask.due:
+            edited_task = Todo.query.filter_by(id=task_id).first()
+            if request.form.get("editTitle", False) != edited_task.title:
+                edited_task.title = request.form["editTitle"]
+            if request.form.get("editDescription ", False) != edited_task.description:
+                edited_task.description = request.form["editDescription "]
+            if request.form.get("editDue", False) != edited_task.due:
                 due = datetime.strptime(request.form["editDue"], "%Y-%m-%d")
-                editedTask.due = due
-            if request.form.get("assigned", False) != editedTask.assigned:
-                editedTask.assigned = ', '.join(request.form.getlist("assigned"))
+                edited_task.due = due
+            if request.form.get("assigned", False) != edited_task.assigned:
+                edited_task.assigned = ', '.join(request.form.getlist("assigned"))
 
             db.session.commit()
             return redirect(url_for("task"))
@@ -236,7 +236,7 @@ def editTask(task_id):
 
 
 @app.route('/viewTask/<int:task_id>')
-def viewTask(task_id):
+def view_task(task_id):
     global user
     user_list = User.query.all()
     if user == User:
@@ -266,7 +266,7 @@ def new_comment(task_id):
 
 
 @app.route("/deleteComment/<int:comment_id>")
-def deleteComment(comment_id: int):
+def delete_comment(comment_id: int):
     global user
     comment = Comment.query.filter_by(id=comment_id).first()
     task_id = comment.todo_id
@@ -276,7 +276,7 @@ def deleteComment(comment_id: int):
 
 
 @app.route('/pin/<task_id>')
-def pinTask(task_id: str):
+def pin_task(task_id: str):
     global user
     user_id = user.id
     edit_user = User.query.filter_by(id=user_id).first()
@@ -293,7 +293,7 @@ def pinTask(task_id: str):
 
 
 @app.route('/unpin/<task_id>')
-def unpinTask(task_id: str):
+def unpin_task(task_id: str):
     global user
     user_id = user.id
     edit_user = User.query.filter_by(id=user_id).first()
