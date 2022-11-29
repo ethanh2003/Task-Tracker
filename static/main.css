@@ -8,7 +8,7 @@ h1 {
 h2 {
     color: mediumseagreen;
     font-family: 'Poppins', sans-serif;
-    
+
 }
 
 label:not(.ex) {
@@ -18,7 +18,7 @@ label:not(.ex) {
     width: 120px;
     font-family: 'Poppins', sans-serif;
     text-align: left;
-    
+
 }
 
 h3 {
@@ -46,11 +46,11 @@ td {
 }
 
 
-tbody{
+tbody {
     font-family: 'Poppins', sans-serif;
 }
 
-td > a > button:not(.exclude){
+td > a > button:not(.exclude) {
     width: 200px;
     height: 30px;
     background-color: goldenrod;
@@ -67,11 +67,11 @@ button:hover {
     cursor: pointer;
 }
 
-strong{
+strong {
     font-family: 'Poppins', sans-serif;
 }
 
-.error{
+.error {
     font-family: 'Poppins', sans-serif;
 }
 
@@ -122,11 +122,11 @@ strong{
     font-size: larger;
 }
 
-.task-button{
+.task-button {
     border-radius: 30px 30px 30px 5px;
 }
 
-.task-button-delete{
+.task-button-delete {
     border-radius: 30px 30px 30px 5px;
 }
 
@@ -143,10 +143,10 @@ strong{
     margin-left: 10px;
     border-radius: 30px 30px 30px 5px;
 
-    
+
 }
 
-.top-bar:hover{
+.top-bar:hover {
     background-color: seagreen;
 }
 
@@ -157,7 +157,7 @@ strong{
     justify-content: center;
 }
 
-.index-header{
+.index-header {
     color: white;
     display: flex;
     justify-content: center;
@@ -167,48 +167,48 @@ strong{
 
 }
 
-.index-header:hover{
+.index-header:hover {
     text-decoration: underline;
-    
+
 }
 
-.index-wrapper{
+.index-wrapper {
     background-color: mediumseagreen;
-    display:flex;
+    display: flex;
     padding: 40px;
     border-radius: 30px;
     width: 100%;
     justify-content: space-between;
 }
 
-.index-text{    
-    width:50%;
+.index-text {
+    width: 50%;
     margin-top: 10px;
 }
 
-*{
+* {
     /*border: 1px solid red;*/
     padding: 0px;
     margin: 0px;
 }
 
-.body-text{
+.body-text {
     font-weight: normal;
     font-family: 'Poppins', sans-serif;
     text-align: center;
 }
 
-body{
+body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap:30px
+    gap: 30px
 }
 
 /* register page */
 .submit-button {
     background-color: mediumseagreen;
-    border-style: none; 
+    border-style: none;
     color: white;
     height: 50px;
     width: 200px;
@@ -216,7 +216,7 @@ body{
     border-radius: 30px 30px 30px 5px;
 }
 
-.submit-button:hover{
+.submit-button:hover {
     background-color: seagreen;
 }
 
@@ -224,7 +224,7 @@ input[type="submit"] {
     color: white;
 }
 
-.input-form{
+.input-form {
     width: 100px;
 }
 
@@ -241,27 +241,26 @@ input[type="submit"] {
 }
 
 
-
 div.h {
-    margin-top: 20px;    
+    margin-top: 20px;
     flex-direction: column;
     text-align: center;
     font-family: 'Poppins', sans-serif;
     background-color: mediumseagreen;
-    display:flex;
+    display: flex;
     padding: 40px;
     border-radius: 30px;
     justify-content: space-between;
     color: white;
-    
+
 
 }
 
 .register-container > form {
     display: flex;
     flex-direction: column;
-    margin-bottom:5px;
-    padding:50px;
+    margin-bottom: 5px;
+    padding: 50px;
 }
 
 .register-container > form > input {
@@ -275,7 +274,7 @@ div.h {
     padding: 10px;
 }
 
-.register-container > form > input[type="submit"]:hover{
+.register-container > form > input[type="submit"]:hover {
     background-color: seagreen;
 }
 
@@ -283,13 +282,13 @@ div.h {
 div.form-item {
     margin-bottom: 20px;
     font-family: 'Poppins', sans-serif;
-    
+
 }
 
 .register-head {
     font-size: 25px;
     margin-bottom: 40px;
-    color:seagreen;
+    color: seagreen;
     font-family: 'Poppins', sans-serif;
 
 }
@@ -305,7 +304,7 @@ div.form-item {
 /*login page*/
 .login-button {
     background-color: red;
-    border-style: none; 
+    border-style: none;
     color: ghostwhite;
     height: 50px;
     width: 200px;
@@ -313,7 +312,7 @@ div.form-item {
     border-radius: 30px 30px 30px 5px;
 }
 
-.login-container{
+.login-container {
     margin-top: 20px;
     display: flex;
     flex-direction: column;
@@ -324,14 +323,14 @@ div.form-item {
 
 /*Commenting*/
 
-.comment-container{
+.comment-container {
     padding: 25px;
     width: 80vw;
-    
+
 
 }
 
-.comment-card{
+.comment-card {
     text-align: left;
     padding: 25px;
     display: flex;
@@ -340,52 +339,52 @@ div.form-item {
     border: 2px seagreen solid;
     border-radius: 10px 10px 10px 10px;
     margin-top: 10px;
-    
 
-  }
-  
-  .comment-card > a{
+
+}
+
+.comment-card > a {
     align-self: flex-end;
     font-family: 'Poppins', sans-serif;
-  }
+}
 
-  .comment-card > a > button{
+.comment-card > a > button {
     background-color: mediumseagreen;
-    border-style: none; 
+    border-style: none;
     color: white;
     height: 25px;
     width: 100px;
     margin-top: 10px;
     border-radius: 30px 30px 30px 5px;
-  }
+}
 
-  .comment-card > div {
+.comment-card > div {
     font-family: 'Poppins', sans-serif;
-  }
+}
 
-  .submit-container{
+.submit-container {
     padding: 25px;
     width: 80vw;
-    display:flex;
+    display: flex;
     flex-direction: column;
-  }
+}
 
-  .submit-container > input{
+.submit-container > input {
     background-color: mediumseagreen;
-    border-style: none; 
+    border-style: none;
     color: whitesmoke;
     height: 25px;
     width: 100px;
     margin-top: 10px;
     border-radius: 30px 30px 30px 5px;
-    align-self:flex-end;
-  }
+    align-self: flex-end;
+}
 
-  .submit-container > input:hover{
+.submit-container > input:hover {
     background-color: seagreen;
-  }
+}
 
-  textarea {
+textarea {
     width: 80vw;
-    height:100px;
-  }
+    height: 100px;
+}

@@ -75,7 +75,8 @@
                     {% if todo.id|string in user.pinnedTask %}
                         <tr>
                             <td class="title"><a href="/unpin/{{ todo.id }}"><img height="20px" width="20px"
-                                                                                  src="{{ url_for('static',filename='pin.png') }}" alt="pin"></a><a
+                                                                                  src="{{ url_for('static',filename='pin.png') }}"
+                                                                                  alt="pin"></a><a
                                     href="/viewTask/{{ todo.id }}">{{ todo.title }}</a></td>
                             <td>{{ todo.description }}</td>
                             <td>{{ todo.due }}</td>
@@ -112,11 +113,11 @@
     <div id="todo" class="todo">
         <table>
             <thead>
-                <th>Title<a href="/task/Title/0">&#9660;</a><a href="/task/Title/1">&#9650;</a></th>
-                <th>Description<a href="/task/Description/0">&#9660;</a><a href="/task/Description/1">&#9650;</a></th>
-                <th>Due Date<a href="/task/Due/0">&#9660;</a><a href="/task/Due/1">&#9650;</a></th>
-                <th>Assigned To<a href="/task/AssignedTo/0">&#9660;</a><a href="/task/AssignedTo/1">&#9650;</a></th>
-                <th>Status<a href="/task/Status/0">&#9660;</a><a href="/task/Status/1">&#9650;</a></th>
+            <th>Title<a href="/task/Title/0">&#9660;</a><a href="/task/Title/1">&#9650;</a></th>
+            <th>Description<a href="/task/Description/0">&#9660;</a><a href="/task/Description/1">&#9650;</a></th>
+            <th>Due Date<a href="/task/Due/0">&#9660;</a><a href="/task/Due/1">&#9650;</a></th>
+            <th>Assigned To<a href="/task/AssignedTo/0">&#9660;</a><a href="/task/AssignedTo/1">&#9650;</a></th>
+            <th>Status<a href="/task/Status/0">&#9660;</a><a href="/task/Status/1">&#9650;</a></th>
             <th></th>
             <th></th>
             </thead>
@@ -125,7 +126,8 @@
                 <tr>
                     {% if user.name in todo.assigned or todo.assigned=="All" %}
                         <td class="title"><a href="/pin/{{ todo.id }}"><img height="20px" width="20px"
-                                                                            src="{{ url_for('static',filename='pin.png') }}" alt="pin"><a
+                                                                            src="{{ url_for('static',filename='pin.png') }}"
+                                                                            alt="pin"><a
                                 href="/viewTask/{{ todo.id }}">{{ todo.title }}</a></td>
                         <td>{{ todo.description }}</td>
                         <td>{{ todo.due }}</td>
@@ -164,11 +166,12 @@
             <table>
                 <thead>
                 <tr>
-                <th>Title<a href="/task/Title/0">&#9660;</a><a href="/task/Title/1">&#9650;</a></th>
-                <th>Description<a href="/task/Description/0">&#9660;</a><a href="/task/Description/1">&#9650;</a></th>
-                <th>Due Date<a href="/task/Due/0">&#9660;</a><a href="/task/Due/1">&#9650;</a></th>
-                <th>Assigned To<a href="/task/AssignedTo/0">&#9660;</a><a href="/task/AssignedTo/1">&#9650;</a></th>
-                <th>Status<a href="/task/Status/0">&#9660;</a><a href="/task/Status/1">&#9650;</a></th>
+                    <th>Title<a href="/task/Title/0">&#9660;</a><a href="/task/Title/1">&#9650;</a></th>
+                    <th>Description<a href="/task/Description/0">&#9660;</a><a href="/task/Description/1">&#9650;</a>
+                    </th>
+                    <th>Due Date<a href="/task/Due/0">&#9660;</a><a href="/task/Due/1">&#9650;</a></th>
+                    <th>Assigned To<a href="/task/AssignedTo/0">&#9660;</a><a href="/task/AssignedTo/1">&#9650;</a></th>
+                    <th>Status<a href="/task/Status/0">&#9660;</a><a href="/task/Status/1">&#9650;</a></th>
                     <th></th>
                     <th></th>
                 </tr>
@@ -176,7 +179,8 @@
                 <tbody>
                 {% for todo in todo_list %}
                     <tr>
-                        <td class="title"><a href="/pin/todo.id"><img height="20px" width="20px" src="{{ url_for('static',filename='pin.png') }}"
+                        <td class="title"><a href="/pin/todo.id"><img height="20px" width="20px"
+                                                                      src="{{ url_for('static',filename='pin.png') }}"
                                                                       alt="pin"><a
                                 href="/viewTask/{{ todo.id }}">{{ todo.title }}</a></td>
                         <td>{{ todo.description }}</td>
@@ -228,7 +232,8 @@
             {% for todo in todo_list %}
                 {% if todo.createdBy == user.id %}
                     <tr>
-                        <td class="title"><a href="/pin/todo.id"><img height="20px" width="20px" src="{{ url_for('static',filename='pin.png') }}"
+                        <td class="title"><a href="/pin/todo.id"><img height="20px" width="20px"
+                                                                      src="{{ url_for('static',filename='pin.png') }}"
                                                                       alt="pin"><a
                                 href="/viewTask/{{ todo.id }}">{{ todo.title }}</a></td>
                         <td>{{ todo.description }}</td>

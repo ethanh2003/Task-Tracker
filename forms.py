@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, TextAreaField
-from wtforms.validators import Length, Regexp, DataRequired, EqualTo, Email
+from wtforms import SubmitField, TextAreaField
+from wtforms.validators import Length
+
 
 class CommentForm(FlaskForm):
     class Meta:

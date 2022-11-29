@@ -5,8 +5,8 @@ from flask import Flask, session
 from flask import render_template
 from flask import request, redirect, url_for
 
-from forms import CommentForm
 from database import db
+from forms import CommentForm
 from models import User, Todo, Comment
 
 app = Flask(__name__)  # create an app
@@ -72,7 +72,7 @@ def delete(todo_id: int):
 
 
 @app.route("/task/<string:sort_id>/<int:order_id>")
-def sortTask(sort_id,order_id):
+def sortTask(sort_id, order_id):
     global user
     if user == User:
         return render_template('login.html', message="Please Log In To access this page")
@@ -99,7 +99,6 @@ def sortTask(sort_id,order_id):
             todo_list = Todo.query.order_by(Todo.assigned.desc())
         if sort_id == "Status":
             todo_list = Todo.query.order_by(Todo.complete)
-
 
     user_list = User.query.all()
     return render_template('task.html', todo_list=todo_list, user_list=user_list, user=user)

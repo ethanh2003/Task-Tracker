@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="./static/main.css">
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 </head>
-<div class= "index-wrapper">
+<div class="index-wrapper">
     <a class="index-header" href="/">
         Task Tracker
     </a>
@@ -19,9 +19,9 @@
         <a href="/task">
             <button class="top-bar">Task</button>
         </a>
-            <a href="/ViewUsers">
-                <button class="top-bar">User Management</button>
-            </a>
+        <a href="/ViewUsers">
+            <button class="top-bar">User Management</button>
+        </a>
     </div>
 </div>
 <h1>{{ error }}</h1>
@@ -44,11 +44,11 @@
             <input required type="text" name="password" value="{{ request.form['password'] }}">
             <br>
             <label>Access Level:</label>
-            <select name="access"> 
+            <select name="access">
                 <option value="0">Basic</option>
                 <option value="1">Admin</option>
             </select>
-            
+
             <br>
             <button class="submit-button" type="submit">Add</button>
             <br>
