@@ -87,7 +87,7 @@ def sortTask(sort_id):
     if sort_id == "AssignedTo":
         todo_list = Todo.query.order_by(Todo.assigned)
     if sort_id == "Status":
-        todo_list = Todo.query.order_by(Todo.complete)
+        todo_list = Todo.query.order_by(Todo.complete.desc())
 
 
     user_list = User.query.all()
