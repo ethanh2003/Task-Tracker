@@ -1,6 +1,6 @@
 import os  # os is used to get environment variables IP & PORT
 from datetime import datetime
-
+from socket import gethostname
 from flask import Flask, session
 from flask import render_template
 from flask import request, redirect, url_for
@@ -362,10 +362,10 @@ def unpin_task(task_id: str):
     return redirect(url_for('task'))
 
 
-if __name__ == "__main__":
-    with app.app_context():
-        db.create_all()
-    app.run(host=os.getenv('IP', '127.0.0.1'), port=int(os.getenv('PORT', 5000)), debug=True)
+if __name__ == '__main__':
+    db.create_all()
+    if 'liveconsole' not in gethostname():
+        app.run()
 
 # To see the web page in your web browser, go to the url,
 #   http://127.0.0.1:5000
