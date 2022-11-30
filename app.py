@@ -4,7 +4,7 @@ from datetime import datetime
 from flask import Flask, session
 from flask import render_template
 from flask import request, redirect, url_for
-
+import re
 from database import db
 from forms import CommentForm
 from models import User, Todo, Comment
@@ -115,10 +115,37 @@ def register():
         if User.query.filter_by(email=email).first() or User.query.filter_by(username=username).first():
             return render_template('register.html', message="Username or Email already in use")
         else:
-            new_user = User(name=name, email=email, username=username, password=password, access=False)
-            db.session.add(new_user)
-            db.session.commit()
-            return redirect(url_for('login'))
+            # calculating the length
+            length_error = len(password) < 8
+
+            # searching for digits
+            digit_error = re.search(r"\d", password) is None
+
+            # searching for uppercase
+            uppercase_error = re.search(r"[A-Z]", password) is None
+
+            # searching for lowercase
+            lowercase_error = re.search(r"[a-z]", password) is None
+
+
+            # overall result
+            password_ok = not (length_error or digit_error or uppercase_error or lowercase_error)
+            message = []
+            if length_error:
+                message.append('Password must be 8 characters')
+            if digit_error:
+                message.append('Password must contain at least one number')
+            if uppercase_error:
+                message.append('Password must have at least one uppercase character')
+            if lowercase_error:
+                message.append('Password must have at least one lowercase character')
+            if password_ok:
+                new_user = User(name=name, email=email, username=username, password=password, access=False)
+                db.session.add(new_user)
+                db.session.commit()
+                return redirect(url_for('login'))
+            else:
+                return render_template('register.html', message=message)
     return render_template('register.html', user=user)
 
 
@@ -147,8 +174,36 @@ def update_user(user_id: int):
     # user_list = User.query.all()
     if request.method == 'POST':
         edit_user = User.query.filter_by(id=user_id).first()
+
         if request.form.get("updatePass", False) != edit_user.password:
-            edit_user.password = request.form["updatePass"]
+            global user
+            if user.access == 1:
+                edit_user.password = request.form["updatePass"]
+            else:
+                password = request.form.get("updatePass", False)
+                # calculating the length
+                length_error = len(password) < 8
+                # searching for digits
+                digit_error = re.search(r"\d", password) is None
+                # searching for uppercase
+                uppercase_error = re.search(r"[A-Z]", password) is None
+                # searching for lowercase
+                lowercase_error = re.search(r"[a-z]", password) is None
+                # overall result
+                password_ok = not (length_error or digit_error or uppercase_error or lowercase_error)
+                message = []
+                if length_error:
+                    message.append('Password must be 8 characters')
+                if digit_error:
+                    message.append('Password must contain at least one number')
+                if uppercase_error:
+                    message.append('Password must have at least one uppercase character')
+                if lowercase_error:
+                    message.append('Password must have at least one lowercase character')
+                if password_ok:
+                    edit_user.password = request.form["updatePass"]
+                else:
+                    return render_template('ViewUsers.html', message=message, user=user)
         if request.form.get("editEmail", False) != edit_user.email:
             edit_user.email = request.form["editEmail"]
         if request.form.get("editUsername", False) != edit_user.username:
